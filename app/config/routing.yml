@@ -1,0 +1,4 @@
+me_passion:
+    resource: "@MePassionBundle/Resources/config/routing.yml"
+    prefix:   /
+

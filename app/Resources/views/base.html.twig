@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" lang="fr" xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" class="ltr fr no-js">
+    <head>
+        <title>Passion running Annonces</title>
+        <meta name="description" content="Petites annnonces d'articles de course à pied d'occasion" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{asset('bundles/mepassion/css/reset.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{asset('bundles/mepassion/css/styles.css')}}" type="text/css" />
+        <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
+        <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
+        <link rel="shortcut icon" type="image/x-icon" href="asset('favicon.ico')}}" />
+        {% endblock %}
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
+        <script src="{{asset('bundles/mepassion/js/app.js')}}"></script>
+        <script src="{{asset('bundles/mepassion/js/controllers.js')}}"></script>
+
+        <base href="/annonces/web/app_dev.php/">
+
+    </head>
+    <body>
+
+
+        <div id="header">
+            <div class="header">
+                <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/> </a>
+                <div class="connexion">
+                    <h2>GERER VOS ANNONCES</h2>
+                    <form action="#" method="post" >
+                    <input type="text" placeholder="identifiant" id="username" name="_username" />
+                    <input type="password" placeholder="mot de passe" id="password" name="_password"/>
+                    <input type="submit" value="OK">
+                    </form>
+
+                    <a href="#motdepasseoublie" class="motdepasseoublie">Mot de passe oublié</a><br />
+                   
+                </div>
+            </div>
+        </div>
+
+        <div id="nav">
+            <div class="nav"> 
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="deposer.html">Déposer une annonce</a></li>
+                    <li><a href="index.html">Consulter les annonces</a>
+                        <ul>
+                            <li><a href="#">Vêtements</a></li>
+                            <li><a href="#">Chaussures</a></li>
+                            <li><a href="#">Accessoires</a></li>
+                        </ul>
+                    </li>
+                    <li class="btnboutique"><a href="http://www.passionrunning.com">Le Blog</a>
+                        <ul>
+                            <li><a href="http://www.passionrunning.com/course-a-pied/">Course à pied</a></li>
+                            <li><a href="http://www.passionrunning.com/entrainement/">Entrainement</a></li>
+                            <li><a href="http://www.passionrunning.com/equipements/">Equipements</a></li>
+                            <li><a href="http://www.passionrunning.com/lecture/">Lecture</a></li>
+                            <li><a href="http://www.passionrunning.com/nutrition/">Nutrition</a></li>
+                            <li><a href="http://www.passionrunning.com/sante-blessure/">Santé / Blessure</a></li>
+                        </ul>
+                    </li>   
+                    <li class="btnboutique"><a href="http://boutique.passionrunning.com">La Boutique</a>
+                        <ul>
+                            <li><a href="http://boutique.passionrunning.com/#!/v%C3%AAtements">Vêtements</a></li>
+                            <li><a href="http://boutique.passionrunning.com/#!/chaussures">Chaussures</a></li>
+                            <li><a href="http://boutique.passionrunning.com/#!/accessoires">Accessoires</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        {% block body %}{% endblock %}
+
+        <div id="footer">
+            <div class="footer">
+
+            </div>
+        </div>
+
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

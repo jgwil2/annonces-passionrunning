@@ -1,0 +1,11 @@
+me_passion_homepage:
+    path:     /
+    defaults: { _controller: MePassionBundle:Default:index }
+
+me_passion_data:
+    path:     /data
+    defaults: { _controller: MePassionBundle:Default:data }
+
+me_passion_deposer:
+    path:     /deposer
+    defaults: { _controller: MePassionBundle:Default:submit }
