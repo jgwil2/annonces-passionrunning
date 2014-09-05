@@ -18,11 +18,12 @@
         <script src="{{asset('bundles/mepassion/js/app.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/controllers.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/services.js')}}"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
         <base href="/annonces/web/app_dev.php/">
 
     </head>
-    <body>
+    <body ng-app="annoncesApp">
         <div id="header">
             <div class="header">
                 <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/> </a>
@@ -37,17 +38,15 @@
                 </div>
             </div>
         </div>
-
-        <div id="nav">
+        {% verbatim %}
+        <div id="nav" ng-controller="NavCtrl">
             <div class="nav"> 
                 <ul>
                     <li><a href="/">Accueil</a></li>
-                    <li><a href="annonces/web/app_dev.php/depot">Déposer une annonce</a></li>
-                    <li><a href="annonces/web/app_dev.php/">Consulter les annonces</a>
+                    <li><a href="depot">Déposer une annonce</a></li>
+                    <li><a href="http://mouvementetik.local/annonces/web/app_dev.php/">Consulter les annonces</a>
                         <ul>
-                            <li><a href="#">Vêtements</a></li>
-                            <li><a href="#">Chaussures</a></li>
-                            <li><a href="#">Accessoires</a></li>
+                            <li ng-repeat="category in categories"><a href="{{category.name}}">{{category.name}}</a></li>
                         </ul>
                     </li>
                     <li class="btnboutique"><a href="http://www.passionrunning.com">Le Blog</a>
@@ -70,6 +69,7 @@
                 </ul>
             </div>
         </div>
+        {% endverbatim %}
 
         {% block body %}{% endblock %}
 

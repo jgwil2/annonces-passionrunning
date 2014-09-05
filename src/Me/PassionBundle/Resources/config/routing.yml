@@ -6,18 +6,18 @@ me_passion_categories:
     path:    /categories-data
     defaults: { _controller: MePassionBundle:Default:categoriesData }
 
+me_passion_deposer:
+    path:     /deposer-data
+    defaults: { _controller: MePassionBundle:Default:submit }
+
 me_passion_homepage:
     path:     /
     defaults: { _controller: MePassionBundle:Default:index }
 
 me_passion_product:
     path:     /annonce/{id}
-    defaults: { _controller: MePassionBundle:Default:index}
+    defaults: { _controller: MePassionBundle:Default:index }
 
 me_passion_category:
     path:     /{page}
     defaults: { _controller: MePassionBundle:Default:index }
-
-me_passion_deposer:
-    path:     /deposer-data
-    defaults: { _controller: MePassionBundle:Default:submit }

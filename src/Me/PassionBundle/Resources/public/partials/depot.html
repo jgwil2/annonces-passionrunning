@@ -1,0 +1,77 @@
+<div id="rubrique">
+	<!--gauche-->
+	<div id="gauche">
+		<form ng-submit="processForm()" novalidate>
+			<h2>Localisation</h2>
+			<div class="ligne">
+				<label>Code postal : </label>
+				<input ng-model="form.code" type="text" style="width: 60px;" size="5"/>
+			</div>
+			<div class="ligne">
+				<label>Ville : </label>
+				<input ng-model="form.ville" type="text" style="width: 150px;" />
+			</div>
+			<h2>Votre Annonce</h2>
+			<div class="ligne">
+				<label>Catégorie : </label>
+				<select ng-model="form.category" ng-options="category.name for category in categories">
+					<option value="">Sélectionner</option>
+				</select>
+			</div>
+
+			<div class="ligne">
+				<label>Titre : </label>
+				<input ng-model="form.titre" type="text" placeholder="Titre de votre annonce" style="width: 150px;" />
+			</div>
+
+			<div class="ligne">
+				<label>Description : </label>
+				<textarea ng-model="form.texte"></textarea>
+			</div>
+
+			<div class="ligne">
+				<label>Prix : </label>
+				<input ng-model="form.prix" type="text" style="width: 60px;" />
+			</div>
+
+			<div class="ligne">
+				<label>Téléphone : </label>
+				<input ng-model="form.tel" type="text" placeholder="exemple: 03 88 00 00 00" style="width: 150px;" />
+			</div>
+
+			<h2>Photo</h2>
+			<div class="ligne">
+				<input type="file" class="file">
+				<small>taille maximum : 500Ko</small>
+			</div>
+
+			<h2>Votre compte</h2>
+			<div class="ligne">
+				<label>Email : </label>
+				<input ng-model="form.user.email" type="text" placeholder="Votre email" />
+			</div>
+
+			<div class="ligne">
+				<label>Mot de passe : </label>
+				<input ng-model="form.user.password" type="password" />
+			</div>
+
+			<div class="ligne">
+				<input type="checkbox" checked ng-model="form.acceptConditions" ng-true-value="1" ng-false-value="0"> J'accepte les <a href="#">conditions d'utilisations</a> du site http://annonces.passionrunning.com
+			</div>
+
+			<div class="ligne">
+				<input type="checkbox" checked ng-model="form.user.contact" ng-true-value="1" ng-false-value="0"> J'accepte de me faire contacter par les partenaires du site http://annonces.passionrunning.com
+			</div>
+
+			<button type="submit">Envoyer mon annonce</button>
+		</form>
+	</div>
+	<!--//gauche-->
+	<!--droite-->
+	<div id="droite">
+	<pre>{{form|json}}</pre>
+	</div>
+	<!--//droite-->					
+</div>
+<!--.rubrique-->

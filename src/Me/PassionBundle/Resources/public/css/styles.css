@@ -232,83 +232,63 @@ small{color: #666666; text-transform: lowercase; font-size: 11px;}
   
   
 #droite .btntelephone:hover{opacity: 0.7; cursor: pointer;}
+#droite label {
+float: left;
+  font-size: 14px;
+  width: 80px;
+  display:block;
+  padding-top: 5px;
+
+}
+
+#droite input:not([type="checkbox"]),
+#droite textarea {
+  background: #ffffff;
+  border: none;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+  font: italic 14px;
+  outline: none;
+  padding: 3px;
+  width: 140px;
+  margin: 3px;
+  border: 1px solid #ccc;
+}
+#gauche textarea{height: 120px;}
 
 
 
-#rubrique h2{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; margin-bottom: 10px;}
+
+
+
+
+
+
+
 
 
 
    
 #rubrique a{color:#333333; text-decoration: none; }
 
-#rubrique a:hover{ color:#333333; text-decoration: none;}
+#rubrique a:hover{ color:#1698de; text-decoration: none;}
    
 #rubrique h1{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de;}
 
 
+#rubrique h2{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; margin-bottom: 10px;}
 
 
 
-#article{ margin:10px auto; width:990px; display: block; height:auto; z-index:10; overflow:hidden;  position:relative;   }
-
-#article #gauche{width: 640px; margin: 5px; float: left; background: none repeat scroll 0 0 #FFFFFF; box-shadow: 0 0 2px #B5B5B5; padding: 4px;}
 
 #partagez{width: 640px; display: block; margin-top: 20px; margin-bottom: 20px; overflow: hidden; border-bottom: 5px solid #1698de; background-color: #eeeeee;}
 #partagez .fondbleu{background-color:#1698de; color: #ffffff; font-weight: bold;}
 .partage{float: left; margin-right: 25px; padding: 10px;}
 
 
-#article .alireaussi{width :200px; height: 170px; float: left; margin-right: 5px; margin-left: 5px; text-align:center; padding-top: 20px; padding-bottom: 10px;}
 
-
-#article .titrealireaussi{width: 150px; padding-top: 5px; text-align:center; display: block; margin-left: auto; margin-right: auto;color: #1698de; font-size: 14px;}
-
-
-#article .alireaussi:hover{background-color:#eeeeee; cursor:pointer; color:#1698de;}
-
-
-
-#article #droite{width: 300px; margin: 5px; margin-left: 15px; float: left; background: none repeat scroll 0 0 #FFFFFF;
-    box-shadow: 0 0 2px #B5B5B5;
-    padding: 4px;}         
-
-
-
-
-#article .spip_logos{ background: none repeat scroll 0 0 #FFFFFF; box-shadow: 0 0 2px #B5B5B5; padding: 4px;
-   }
-   
-   #article .bloc{overflow: hidden; margin-bottom: 10px;}
-   
-   #article .spip_documents_left{
-	background: none repeat scroll 0 0 #FFFFFF;
-    box-shadow: 0 0 2px #B5B5B5;
-    padding: 4px;
-   	margin-right: 10px;
-   	clear: both;
-  
-   }
-
-#article a{color:#333333; text-decoration: none; }
-
-#article a:hover{ color:#333333; text-decoration: none;}
-
-#article h1{padding-left: 10px; padding-right: 10px; font-weight: normal; font-size: 42px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de;}
-
-#article .soustitre{display: block; width: 620px; padding: 10px; text-align: center; }
-#article .soustitre img{
-	background: none repeat scroll 0 0 #FFFFFF;
-    box-shadow: 0 0 2px #B5B5B5;
-    padding: 4px;}
-    
-#article .chapo{font-weight: bold;  font-size: 18px; color: #333333;  display: block; width: 620px; padding: 10px;}
-
-#article .texte{font-weight: normal; font-size: 16px; color: #333333; display: block; width: 620px; padding: 10px;}
-
-#article h3{font-weight: normal; font-size: 24px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; text-transform: uppercase;  margin-bottom: 10px; }
-
-#article p{margin-bottom: 15px;}
 
 .titre-top {
     padding: 5px 0;
@@ -319,14 +299,6 @@ small{color: #666666; text-transform: lowercase; font-size: 11px;}
     height: 12px;
     margin-top: 5px;
     overflow: hidden;
-}
-
-#search{
-  margin-bottom: 2em;
-}
-
-#categories{
-  margin-bottom: 2em;
 }
 
 .titre-top h4 {
@@ -340,21 +312,21 @@ small{color: #666666; text-transform: lowercase; font-size: 11px;}
     text-transform: uppercase;
 }
 
-#article #droite .lien{display: block; background:url(../images/fleche_bleu.png) no-repeat left top; padding-left: 20px;  }
 
-#article #droite a{font-size: 13px; color:#1698de; text-decoration: none; }
+#droite .ligne{display: block; margin-bottom: 3px;}
 
-#article #droite a:hover{ color:#333333; text-decoration: none;}
 
-#gauche label {
+#gauche label{
 float: left;
   font-size: 14px;
-  width: 130px;
+  width: 150px;
   display:block;
   padding-top: 5px;
 
 }
 
+
+#gauche input [type=file]
 #gauche input:not([type="checkbox"]),
 #gauche textarea {
   background: #ffffff;
@@ -370,6 +342,14 @@ float: left;
   margin: 3px;
   border: 1px solid #ccc;
 }
+#gauche input [type=file]{border: none; margin-top: 5px;}
+
+#gauche input:not([type=submit]):focus,
+#gauche textarea:focus {
+  background: #a8c3cf;
+}
+
+
 #gauche textarea{height: 120px;}
 
 
@@ -409,21 +389,160 @@ float: left;
 
 
 
-#gauche .ligne{display: block; margin-bottom: 3px;}
+#gauche .ligne{display: block; margin-bottom: 3px; font-size: 11px;}
 
 
 
 
+#gauche .file{
+	border: none;
+	}
 
 
+#search{
+  margin-bottom: 2em;
+}
 
-
+#categories{
+  margin-bottom: 2em;
+}
 
 
 #footer{ width:100%; background-color: #1698de; height: 130px; padding-top: 10px;  border-top: 5px solid #db6721; }
 
 
 #footer .footer{width: 990px; color: #ffffff; font-size: 12px; display: block; text-align: center; margin-right: auto; margin-left: auto; font-weight: normal;}
+
+
+#motdepasseoublie{
+	margin-right: auto;
+	margin-left: auto;
+	display: block; 
+	width: 400px;
+	height: 400px;
+	background-color: #ffffff;
+	z-index: 10000;
+	padding: 10px;
+	//display: none;
+	}
+
+
+#motdepasseoublie .fermeture{position: absolute; right: 15px; top: 10px; color: #1698de; font-size: 24px;  font-family: 'Yanone Kaffeesatz', sans-serif; }
+#motdepasseoublie .fermeture a{color: #1698de; text-decoration: none;}
+#motdepasseoublie .fermeture a:hover{color: #1698de; text-decoration: none;}
+#motdepasseoublie h2{margin-top: 30px; color: #1698de; font-size: 30px;  font-family: 'Yanone Kaffeesatz', sans-serif;  margin-bottom: 20px;}
+
+#motdepasseoublie .grandchamp{ background: #ffffff;
+  border: 1px solid #abadba;
+  font: normal 16px;
+  outline: none;
+  padding: 5px;
+  width: 382px;
+  height: 25px;
+  margin: 3px;
+  color: #abadba;
+}
+#motdepasseoublie .grandchamp:focus{color: #333333;}
+
+#motdepasseoublie .petitchamp{ background: #ffffff;
+   border: 1px solid #abadba;
+  font: normal 16px;
+  outline: none;
+  padding: 5px;
+  width: 180px;
+  height: 25px;
+  margin: 3px;
+  color: #abadba;
+}
+#motdepasseoublie .petitchamp:focus{color: #333333;}
+
+#motdepasseoublie button{
+	  width: 400px;
+	  margin-top: 10px;
+	  border: none;
+	  background-color: #1698de;
+	  -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+color: #ffffff;
+font-size: 24px;
+font-family: 'Roboto Condensed', sans-serif;
+	}
+
+#motdepasseoublie button:hover{background-color: #1698de; cursor: pointer;}
+
+#reponse{
+	margin-right: auto;
+	margin-left: auto;
+	display: block; 
+	width: 400px;
+	height: 400px;
+	background-color: #ffffff;
+	
+	z-index: 10000;
+	padding: 10px;
+	//display:none;
+	}
+
+#reponse .fermeture{position: absolute; right: 15px; top: 10px; color: #1698de; font-size: 24px;  font-family: 'Yanone Kaffeesatz', sans-serif; }
+#reponse .fermeture a{color: #1698de; text-decoration: none;}
+#reponse .fermeture a:hover{color: #1698de; text-decoration: none;}
+#reponse h2{margin-top: 30px; color: #1698de; font-size: 30px;  font-family: 'Yanone Kaffeesatz', sans-serif;  margin-bottom: 20px;}
+
+#reponse .grandchamp{ background: #ffffff;
+  border: 1px solid #abadba;
+  font: normal 16px;
+  outline: none;
+  padding: 5px;
+  width: 382px;
+  height: 25px;
+  margin: 3px;
+  color: #abadba;
+}
+
+#reponse textarea{background: #ffffff;
+  border: 1px solid #abadba;
+  font: normal 16px;
+  
+  outline: none;
+  padding: 5px;
+  width: 382px;
+  height: 150px;
+   margin: 3px;
+  color: #333333;
+ 
+}
+
+
+#reponse .grandchamp:focus{color: #333333;}
+
+#reponse .petitchamp{ background: #ffffff;
+   border: 1px solid #abadba;
+  font: normal 16px;
+  outline: none;
+  padding: 5px;
+  width: 180px;
+  height: 25px;
+  margin: 3px;
+  color: #abadba;
+}
+#reponse .petitchamp:focus{color: #333333;}
+
+#reponse button{
+	  width: 400px;
+	  margin-top: 10px;
+	  border: none;
+	  background-color: #1698de;
+	  -webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+color: #ffffff;
+font-size: 24px;
+font-family: 'Roboto Condensed', sans-serif;
+	}
+
+#reponse button:hover{background-color: #1698de; cursor: pointer;}
+
 
 
 

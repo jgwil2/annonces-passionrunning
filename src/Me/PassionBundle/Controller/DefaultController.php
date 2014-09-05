@@ -48,14 +48,25 @@ class DefaultController extends Controller
         return $response;
     }
 
+    public function submitAction(Request $request)
+    {
+        // TODO: need to figure out how to STOP recursion of entities, this will allow use of ORM
+        // http://stackoverflow.com/questions/11851197/avoiding-recursion-with-doctrine-entities-and-jmsserializer
+        $repository = $this->getDoctrine()->getRepository('MePassionBundle:Annonce');
+        $entity = $repository->findOneById(1);
+
+        //$requestObject = $this->container->get('serializer')->deserialize($request, 'Me\PassionBundle\Entity\Annonce', 'json');
+
+        $serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
+        $response = new Response($serializedEntity);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
     public function indexAction()
     {
         return $this->render('MePassionBundle:Default:index.html.twig');
-    }
-
-    public function submitAction(Request $request)
-    {
-
     }
 
     public function myPostsAction()
