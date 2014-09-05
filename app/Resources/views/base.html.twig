@@ -17,13 +17,12 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
         <script src="{{asset('bundles/mepassion/js/app.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/controllers.js')}}"></script>
+        <script src="{{asset('bundles/mepassion/js/services.js')}}"></script>
 
         <base href="/annonces/web/app_dev.php/">
 
     </head>
     <body>
-
-
         <div id="header">
             <div class="header">
                 <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/> </a>
@@ -34,9 +33,7 @@
                     <input type="password" placeholder="mot de passe" id="password" name="_password"/>
                     <input type="submit" value="OK">
                     </form>
-
-                    <a href="#motdepasseoublie" class="motdepasseoublie">Mot de passe oublié</a><br />
-                   
+                    <p><a href="#motdepasseoublie" class="motdepasseoublie">Mot de passe oublié</a></p>   
                 </div>
             </div>
         </div>
@@ -44,9 +41,9 @@
         <div id="nav">
             <div class="nav"> 
                 <ul>
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="deposer.html">Déposer une annonce</a></li>
-                    <li><a href="index.html">Consulter les annonces</a>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="annonces/web/app_dev.php/depot">Déposer une annonce</a></li>
+                    <li><a href="annonces/web/app_dev.php/">Consulter les annonces</a>
                         <ul>
                             <li><a href="#">Vêtements</a></li>
                             <li><a href="#">Chaussures</a></li>

@@ -1,11 +1,23 @@
+me_passion_data:
+    path:     /annonces-data
+    defaults: { _controller: MePassionBundle:Default:annoncesData }
+
+me_passion_categories:
+    path:    /categories-data
+    defaults: { _controller: MePassionBundle:Default:categoriesData }
+
 me_passion_homepage:
     path:     /
     defaults: { _controller: MePassionBundle:Default:index }
 
-me_passion_data:
-    path:     /data
-    defaults: { _controller: MePassionBundle:Default:data }
+me_passion_product:
+    path:     /annonce/{id}
+    defaults: { _controller: MePassionBundle:Default:index}
+
+me_passion_category:
+    path:     /{page}
+    defaults: { _controller: MePassionBundle:Default:index }
 
 me_passion_deposer:
-    path:     /deposer
+    path:     /deposer-data
     defaults: { _controller: MePassionBundle:Default:submit }

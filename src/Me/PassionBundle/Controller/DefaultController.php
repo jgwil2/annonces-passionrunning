@@ -11,17 +11,12 @@ use Me\PassionBundle\Entity\Category;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('MePassionBundle:Default:index.html.twig');
-    }
-
-    public function dataAction()
+    public function annoncesDataAction()
     {
     	$conn = $this->get('database_connection');
     	$entity = $conn->fetchAll(
-    		'SELECT `titre`, `texte`, `prix`, `photo`, `code_postal`, `ville`, `tel`, `valid`, 
-    		DATE_FORMAT(Annonce.`dateCreated`, \'%m/%d/%Y\') AS date,
+    		'SELECT Annonce.`id`, `titre`, `texte`, `prix`, `photo`, `code_postal`, `ville`, `tel`, `valid`, 
+    		DATE_FORMAT(Annonce.`dateCreated`, \'%d/%m/%Y\') AS date,
     		DATE_FORMAT(Annonce.`dateCreated`, \'%H:%i\') AS time,
     		Category.name AS category, 
     		User.email AS user
@@ -33,11 +28,29 @@ class DefaultController extends Controller
     		AND Annonce.valid = 1');
 
     	$serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
-
     	$response = new Response($serializedEntity);
     	$response->headers->set('Content-Type', 'application/json');
 
     	return $response;
+    }
+
+    public function categoriesDataAction()
+    {
+        $conn = $this->get('database_connection');
+        $entity = $conn->fetchAll(
+            'SELECT * 
+            FROM Category');
+
+        $serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
+        $response = new Response($serializedEntity);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
+    }
+
+    public function indexAction()
+    {
+        return $this->render('MePassionBundle:Default:index.html.twig');
     }
 
     public function submitAction(Request $request)
@@ -51,6 +64,11 @@ class DefaultController extends Controller
     }
 
     public function modifyAction()
+    {
+
+    }
+
+    public function deactivateAction()
     {
 
     }

@@ -3,12 +3,12 @@
 	<div id="gauche">
 		<h1>Les dernières annonces</h1>
 		<!--début blocannonce-->
-		<a href="annonce.html" ng-repeat="annonce in annonces">
+		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category">
 		<div class="blocannonce">
 			<!-- début date -->
 			<div class="dateannonce">
-				<p>3 Septembre</p>
-				<p>18:44</p>
+				<p>{{annonce.date}}</p>
+				<p>{{annonce.time}}</p>
 			</div>
 			<!-- // date -->
 			<!-- début photo -->
@@ -46,9 +46,9 @@
 		</div>
 		
 		<div id="categories">
-			<a href="annonce.html">Accessoires</a><br />
-			<a href="annonce.html">Chaussures</a><br />
-			<a href="annonce.html">Vetements</a>
+			<p ng-repeat="category in categories">
+				<a href="{{category.name}}">{{category.name}}</a>
+			</p>
 		</div>
 
 		<div class="titre-top">

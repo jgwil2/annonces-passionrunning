@@ -1,1 +1,50 @@
-this is an individual annonce
+<div id="rubrique">
+	<!--gauche-->
+	<div id="gauche">
+		<!--début detailannonce-->
+		<div class="detailannonce">
+			<span class="detailtitreannonce">{{annonce.titre}}</span>
+			<!-- début photo -->
+			<div class="detailphotoannonce">
+				<img src="" alt="{{annonce.titre}}" class="imgbig" />
+			</div>
+			<!-- // photo -->
+
+			<!-- début date -->
+			<div class="detaildateannonce">Date de mise en ligne : {{annonce.date}} -- {{annonce.time}}</div>
+			<!-- // date -->
+
+			<!-- début contenuannonce -->
+			<div class="detailcontenuannonce">
+				<p>Ville : {{annonce.ville}}</p>
+				<p>Code postal : {{annonce.code}}</p>
+				<strong>Prix : </strong><span class="detailprixannonce">{{annonce.prix}}€</span>
+			</div>
+			<!-- // contenuannonce -->
+
+			<!-- début description -->
+			<div class="detaildescription">
+				<strong>Description :</strong>
+				<p>{{annonce.texte}}</p>
+			</div>
+			<!-- // description -->
+		</div>
+		<!--// detailannonce-->
+	</div>
+	<!--//gauche-->
+
+	<!--droite-->
+	<div id="droite">
+		<div class="btnrepondre">
+			<p>Répondre</p>
+			<p>par email</p>
+		</div>
+
+		<div class="btntelephone">
+			<p>Téléphonez au</p>
+			<p>{{annonce.tel}}</p>
+		</div>
+	</div>
+	<!--//droite-->
+</div>
+<!--.rubrique-->

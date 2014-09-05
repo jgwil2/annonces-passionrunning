@@ -2,7 +2,8 @@
 
 var annoncesApp = angular.module('annoncesApp', [
 	'annoncesControllers',
-	'ngRoute'
+	'ngRoute',
+	'Data'
 ]);
 
 var DIR = '../bundles/mepassion/partials';
@@ -15,11 +16,15 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: DIR + '/list.html',
 				controller: 'ListCtrl'
 			}).
+			when('/depot',{
+				templateUrl: DIR + '/depot.html',
+				controller: 'DepotCtrl'
+			}).
 			when('/:category', {
 				templateUrl: DIR + '/list.html',
 				controller: 'ListCtrl'
 			}).
-			when('/annonce/:annonceID', {
+			when('/annonce/:annonceId', {
 				templateUrl: DIR + '/annonce.html',
 				controller: 'AnnonceCtrl'
 			}).
