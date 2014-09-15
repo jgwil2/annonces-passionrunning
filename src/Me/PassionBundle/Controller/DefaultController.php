@@ -52,14 +52,20 @@ class DefaultController extends Controller
     {
         // TODO: need to figure out how to STOP recursion of entities, this will allow use of ORM
         // http://stackoverflow.com/questions/11851197/avoiding-recursion-with-doctrine-entities-and-jmsserializer
-        $repository = $this->getDoctrine()->getRepository('MePassionBundle:Annonce');
-        $entity = $repository->findOneById(1);
 
+        //$repository = $this->getDoctrine()->getRepository('MePassionBundle:Annonce');
+        //$entity = $repository->findOneById(1);
+        //$serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
         //$requestObject = $this->container->get('serializer')->deserialize($request, 'Me\PassionBundle\Entity\Annonce', 'json');
 
-        $serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
-        $response = new Response($serializedEntity);
-        $response->headers->set('Content-Type', 'application/json');
+        $content = $this->get("request")->getContent();
+        if (!empty($content))
+        {
+            $params = json_decode($content); // 2nd param to get as array
+        }
+        
+        $response = new Response(gettype($params));
+        //$response->headers->set('Content-Type', 'application/json');
 
         return $response;
     }

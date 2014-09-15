@@ -49,6 +49,13 @@ class User implements UserInterface, \Serializable
      */
     protected $annonces;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="contact", type="boolean")
+     */
+    private $contact;
+
     public function __construct()
     {
         $this->dateCreated = date();
