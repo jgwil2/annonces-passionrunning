@@ -30,7 +30,7 @@ class Annonce
 
     /**
      * @var integer
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="annonces")
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="annonces", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
@@ -59,7 +59,7 @@ class Annonce
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", length=255)
+     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
      */
     private $photo;
 
@@ -107,7 +107,8 @@ class Annonce
 
     public function __construct()
     {
-        $this->dateCreated = date();
+        $this->dateCreated = new \DateTime();
+        $this->valid = 0;
     }
 
     /**
@@ -149,9 +150,9 @@ class Annonce
      * @param integer $category
      * @return Annonce
      */
-    public function setCategory($categorieId)
+    public function setCategory($categoryId)
     {
-        $this->category = $category;
+        $this->category = $categoryId;
 
         return $this;
     }

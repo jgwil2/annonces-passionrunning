@@ -58,7 +58,7 @@ class User implements UserInterface, \Serializable
 
     public function __construct()
     {
-        $this->dateCreated = date();
+        $this->dateCreated = new \DateTime();
         $this->annonces = new ArrayCollection();
     }
 
@@ -171,5 +171,84 @@ class User implements UserInterface, \Serializable
             $this->email,
             $this->password,
         ) = unserialize($serialized);
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return User
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set contact
+     *
+     * @param boolean $contact
+     * @return User
+     */
+    public function setContact($contact)
+    {
+        $this->contact = $contact;
+
+        return $this;
+    }
+
+    /**
+     * Get contact
+     *
+     * @return boolean 
+     */
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
+    /**
+     * Add annonces
+     *
+     * @param \Me\PassionBundle\Entity\Annonce $annonces
+     * @return User
+     */
+    public function addAnnonce(\Me\PassionBundle\Entity\Annonce $annonces)
+    {
+        $this->annonces[] = $annonces;
+
+        return $this;
+    }
+
+    /**
+     * Remove annonces
+     *
+     * @param \Me\PassionBundle\Entity\Annonce $annonces
+     */
+    public function removeAnnonce(\Me\PassionBundle\Entity\Annonce $annonces)
+    {
+        $this->annonces->removeElement($annonces);
+    }
+
+    /**
+     * Get annonces
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAnnonces()
+    {
+        return $this->annonces;
     }
 }

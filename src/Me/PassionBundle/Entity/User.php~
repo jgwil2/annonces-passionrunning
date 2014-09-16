@@ -45,16 +45,16 @@ class User implements UserInterface, \Serializable
     private $dateCreated;
 
     /**
+     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="userId")
+     */
+    protected $annonces;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="contact", type="boolean")
      */
     private $contact;
-
-    /**
-     * @ORM\OneToMany(targetEntity="Annonce", mappedBy="userId")
-     */
-    protected $annonces;
 
     public function __construct()
     {

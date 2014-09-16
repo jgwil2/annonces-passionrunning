@@ -543,7 +543,21 @@ font-family: 'Roboto Condensed', sans-serif;
 
 #reponse button:hover{background-color: #1698de; cursor: pointer;}
 
+.check{
+  display: none;
+  font-size: 14px;
+  font-weight: bold;
+  margin-left: 4px;
+  color: #6FD45D;
+}
 
+.ng-valid.ng-dirty + .check {
 
+  display: inline-block;
+}
 
+.error{
+  color: #ff494e;
+  text-align: center;
+}
 

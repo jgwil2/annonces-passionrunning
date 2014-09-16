@@ -1,27 +1,27 @@
 <div id="rubrique">
 	<!--gauche-->
 	<div id="gauche">
-		<form ng-submit="processForm()" novalidate>
+		<form name="submitForm" ng-submit="processForm()" novalidate>
 			<h2>Localisation</h2>
 			<div class="ligne">
 				<label>Code postal : </label>
-				<input ng-model="form.code" type="text" style="width: 60px;" size="5"/>
+				<input ng-model="form.code" ng-model-options="{ updateOn: 'blur' }" type="text" ng-pattern="/^\d{5}$/" style="width: 60px;" size="5" required /><div class="check">&#x2713;</div>
 			</div>
 			<div class="ligne">
 				<label>Ville : </label>
-				<input ng-model="form.ville" type="text" style="width: 150px;" />
+				<input ng-model="form.ville" type="text" style="width: 150px;" required /><div class="check">&#x2713;</div>
 			</div>
 			<h2>Votre Annonce</h2>
 			<div class="ligne">
 				<label>Catégorie : </label>
-				<select ng-model="form.category" ng-options="category.name for category in categories">
+				<select ng-model="form.category" ng-options="category.name for category in categories"required >
 					<option value="">Sélectionner</option>
-				</select>
+				</select><div class="check">&#x2713;</div>
 			</div>
 
 			<div class="ligne">
 				<label>Titre : </label>
-				<input ng-model="form.titre" type="text" placeholder="Titre de votre annonce" style="width: 150px;" />
+				<input ng-model="form.titre" type="text" placeholder="Titre de votre annonce" style="width: 150px;" required /><div class="check">&#x2713;</div>
 			</div>
 
 			<div class="ligne">
@@ -31,12 +31,12 @@
 
 			<div class="ligne">
 				<label>Prix : </label>
-				<input ng-model="form.prix" type="text" style="width: 60px;" />
+				<input ng-model="form.prix" type="text" style="width: 60px;" required /><div class="check">&#x2713;</div>
 			</div>
 
 			<div class="ligne">
 				<label>Téléphone : </label>
-				<input ng-model="form.tel" type="text" placeholder="exemple: 03 88 00 00 00" style="width: 150px;" />
+				<input ng-model="form.tel" type="text" placeholder="exemple: 03 88 00 00 00" style="width: 150px;" ng-pattern="/^0[1-68]([-. ]?[0-9]{2}){4}$/" required /><div class="check">&#x2713;</div>
 			</div>
 
 			<h2>Photo</h2>
@@ -48,23 +48,23 @@
 			<h2>Votre compte</h2>
 			<div class="ligne">
 				<label>Email : </label>
-				<input ng-model="form.user.email" type="text" placeholder="Votre email" />
+				<input ng-model="form.user.email" type="email" placeholder="Votre email" required /><div class="check">&#x2713;</div>
 			</div>
 
 			<div class="ligne">
 				<label>Mot de passe : </label>
-				<input ng-model="form.user.password" type="password" />
+				<input ng-model="form.user.password" type="password" required /><div class="check">&#x2713;</div>
 			</div>
 
 			<div class="ligne">
-				<input type="checkbox" checked ng-model="form.acceptConditions" ng-true-value="1" ng-false-value="0"> J'accepte les <a href="#">conditions d'utilisations</a> du site http://annonces.passionrunning.com
+				<input type="checkbox" ng-model="form.acceptConditions" ng-true-value="1" ng-false-value="0" ng-required="!form.acceptConditions" ng-checked="true" /> J'accepte les <a href >conditions d'utilisations</a> du site http://annonces.passionrunning.com
 			</div>
 
 			<div class="ligne">
-				<input type="checkbox" checked ng-model="form.user.contact" ng-true-value="1" ng-false-value="0"> J'accepte de me faire contacter par les partenaires du site http://annonces.passionrunning.com
+				<input type="checkbox" ng-model="form.user.contact" ng-true-value="1" ng-false-value="0" /> J'accepte de me faire contacter par les partenaires du site http://annonces.passionrunning.com
 			</div>
-
-			<button type="submit">Envoyer mon annonce</button>
+			<div class="error" ng-show="formError" >Veuillez remplir le formulaire avant de l'envoyer</div>
+			<button type="submit" >Envoyer mon annonce</button>
 		</form>
 	</div>
 	<!--//gauche-->

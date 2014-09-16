@@ -4,6 +4,7 @@ namespace Me\PassionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use JMS\SerializerBundle\Annotation\Type;
 
 /**
  * Category
@@ -14,6 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Category
 {
     /**
+     * @Type("integer")
+     *
      * @var integer
      *
      * @ORM\Column(name="id", type="integer")
@@ -23,6 +26,8 @@ class Category
     private $id;
 
     /**
+     * @Type("string")
+     *
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)

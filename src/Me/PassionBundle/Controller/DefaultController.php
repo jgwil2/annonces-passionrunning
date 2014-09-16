@@ -7,7 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-use Me\PassionBundle\Entity\Category;
+use Me\PassionBundle\Entity\User;
+use Me\PassionBundle\Entity\Annonce;
 
 class DefaultController extends Controller
 {
@@ -59,12 +60,51 @@ class DefaultController extends Controller
         //$requestObject = $this->container->get('serializer')->deserialize($request, 'Me\PassionBundle\Entity\Annonce', 'json');
 
         $content = $this->get("request")->getContent();
-        if (!empty($content))
-        {
-            $params = json_decode($content); // 2nd param to get as array
+        if (!empty($content)){
+            $params = json_decode($content);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $em->getRepository('MePassionBundle:User')->findOneByEmail($params->user->email);
+
+            if(!$user){
+                $newUser = new User();
+                $newUser->setEmail($params->user->email);
+                $newUser->setPassword(password_hash($params->user->password, PASSWORD_BCRYPT));
+                $newUser->setContact($params->user->contact);
+
+                $em->persist($newUser);
+                $em->flush();
+            }
+            else{
+                $user->setPassword(password_hash($params->user->password, PASSWORD_BCRYPT));
+            }
+
+            $annonce = new Annonce();
+            $category = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+            $annonce->setCategory($category);
+            $annonce->setTitre($params->titre);
+            $annonce->setTexte($params->texte);
+            $annonce->setPrix($params->prix);
+            //$annonce->setPhoto()
+            $annonce->setCodePostal($params->code);
+            $annonce->setVille($params->ville);
+            $annonce->setTel($params->tel);
+            $annonce->setValidationCode(substr(md5(uniqid(mt_rand(), true)), 0, 8));
+
+            if(!$user){
+                $user = $em->getRepository('MePassionBundle:User')->findOneByEmail($params->user->email);
+                $annonce->setUserId($user);
+            }
+            else{
+                $annonce->setUserId($user);
+            }
+
+            $em->persist($annonce);
+            $em->flush();
         }
-        
-        $response = new Response(gettype($params));
+
+        $response = new Response(json_encode($annonce));
         //$response->headers->set('Content-Type', 'application/json');
 
         return $response;

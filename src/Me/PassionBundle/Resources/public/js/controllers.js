@@ -49,15 +49,21 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data',
 			$scope.categories = categories;
 		});
 
-		$scope.form = {};
-		$scope.form.user = {};
-
-		$scope.form.acceptConditions = "1";
-		$scope.form.user.contact = "1";
+		$scope.form = {
+			"acceptConditions": "1",
+			"user": {
+				"contact": "1"
+			}
+		};
 
 		$scope.processForm = function(){
-			Data.submitAsync($scope.form).then(function(data){
-				console.log('data submitted')
-			});
+			if($scope.submitForm.$invalid){
+				$scope.formError = true;
+			}
+			else{
+				Data.submitAsync($scope.form).then(function(data){
+					console.log('data submitted')
+				});
+			}
 		}
 	}]);
