@@ -3,7 +3,8 @@
 var annoncesApp = angular.module('annoncesApp', [
 	'annoncesControllers',
 	'ngRoute',
-	'Data'
+	'Data',
+	'angularFileUpload'
 ]);
 
 var DIR = '../bundles/mepassion/partials';
