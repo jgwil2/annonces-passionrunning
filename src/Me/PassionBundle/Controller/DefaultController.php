@@ -82,7 +82,8 @@ class DefaultController extends Controller
 
             // save new annonce
             $annonce = new Annonce();
-            $category = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+            $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+            $category = $em->merge($detachedCategory);
             $annonce->setCategory($category);
             $annonce->setTitre($params->titre);
             $annonce->setTexte($params->texte);
