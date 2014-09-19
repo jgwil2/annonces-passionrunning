@@ -8,6 +8,7 @@ var annoncesApp = angular.module('annoncesApp', [
 ]);
 
 var DIR = '../bundles/mepassion/partials';
+//PHOTO_DIR = '../../web/uploads/'
 
 annoncesApp.config(['$routeProvider', '$locationProvider',
 	function($routeProvider, $locationProvider){

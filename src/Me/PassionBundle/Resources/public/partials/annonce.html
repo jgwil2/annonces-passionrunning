@@ -6,7 +6,7 @@
 			<span class="detailtitreannonce">{{annonce.titre}}</span>
 			<!-- début photo -->
 			<div class="detailphotoannonce">
-				<img src="" alt="{{annonce.titre}}" class="imgbig" />
+				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgbig" />
 			</div>
 			<!-- // photo -->
 
@@ -35,10 +35,10 @@
 
 	<!--droite-->
 	<div id="droite">
-		<div class="btnrepondre">
+		<a href class="reponse"><div class="btnrepondre">
 			<p>Répondre</p>
 			<p>par email</p>
-		</div>
+		</div></a>
 
 		<div class="btntelephone">
 			<p>Téléphonez au</p>

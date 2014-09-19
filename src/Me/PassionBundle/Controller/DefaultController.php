@@ -18,7 +18,7 @@ class DefaultController extends Controller
         // get all annonces
     	$conn = $this->get('database_connection');
     	$entity = $conn->fetchAll(
-    		'SELECT Annonce.`id`, `titre`, `texte`, `prix`, `photo`, `code_postal`, `ville`, `tel`, `valid`, 
+    		'SELECT Annonce.`id`, `titre`, `texte`, `prix`, `photoPath`, `code_postal`, `ville`, `tel`, `valid`, 
     		DATE_FORMAT(Annonce.`dateCreated`, \'%d/%m/%Y\') AS date,
     		DATE_FORMAT(Annonce.`dateCreated`, \'%H:%i\') AS time,
     		Category.name AS category, 
@@ -89,12 +89,13 @@ class DefaultController extends Controller
             $annonce->setTitre($params->titre);
             $annonce->setTexte($params->texte);
             $annonce->setPrix($params->prix);
-            //$annonce->setPhoto()
             $annonce->setCodePostal($params->code);
             $annonce->setVille($params->ville);
             $annonce->setTel($params->tel);
             $validationCode = substr(md5(uniqid(mt_rand(), true)), 0, 8);
             $annonce->setValidationCode($validationCode);
+
+            $annonce->setPhoto($this->get("request")->files->get('file'));
 
             // if user data is not already available, get new user and save to annonce
             if(!$user){
@@ -124,13 +125,16 @@ class DefaultController extends Controller
                     'text/html');
 
             //$this->get('mailer')->send($message);
+
+            // add real response here
+            $response = new Response(json_encode($annonce));
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
         }
 
-        // add real response here
-        $response = new Response(json_encode($annonce));
-        $response->headers->set('Content-Type', 'application/json');
-
-        return $response;
+        // add error response here
+        
     }
 
     public function confirmAction($id, $code)

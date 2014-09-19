@@ -3,10 +3,13 @@
 namespace Me\PassionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Annonce
  *
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table()
  * @ORM\Entity
  */
@@ -59,9 +62,9 @@ class Annonce
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", length=255, nullable=true)
+     * @ORM\Column(name="photoPath", type="string", length=255, nullable=true)
      */
-    private $photo;
+    private $photoPath;
 
     /**
      * @var string
@@ -109,6 +112,104 @@ class Annonce
     {
         $this->dateCreated = new \DateTime();
         $this->valid = 0;
+    }
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $photo;
+
+    private $temp;
+
+    /**
+     * Sets file.
+     *
+     * @param UploadedFile $photo
+     */
+    public function setPhoto(UploadedFile $photo = null)
+    {
+        $this->photo = $photo;
+
+        if(isset($this->photoPath)){
+            $this->temp = $this->photoPath;
+            $this->photoPath = null;
+        }
+        else{
+            $this->photoPath = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if(null !== $this->getPhoto()){
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->photoPath = $filename.'.'.$this->getPhoto()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if(null === $this->getPhoto()){
+            return;
+        }
+
+        $this->getPhoto()->move($this->getUploadRootDir(), $this->photoPath);
+
+        if(isset($this->temp)){
+            unlink($this->getUploadRootDir().'/'.$this->temp);
+            $this->temp = null;
+        }
+
+        $this->photo = null;
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if($photo == $this->getAbsolutePath()){
+            unlink($photo);
+        }
+    }
+
+    /**
+     * Get file.
+     *
+     * @return UploadedFile
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    // Convenience functions for getting photo file path
+    public function getAbsolutePath()
+    {
+        return null === $this->photoPath ? null : $this->getUploadRootDir().'/'.$this->photoPath;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->photoPath ? null : $this->getUploadDir().'/'.$this->photoPath;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads';
     }
 
     /**
@@ -240,11 +341,11 @@ class Annonce
      * Set photo
      *
      * @param string $photo
-     * @return Annonce
+     * @return Vigneron
      */
-    public function setPhoto($photo)
+    public function setPhotoPath($photoPath)
     {
-        $this->photo = $photo;
+        $this->photoPath = $photoPath;
 
         return $this;
     }
@@ -254,9 +355,9 @@ class Annonce
      *
      * @return string 
      */
-    public function getPhoto()
+    public function getPhotoPath()
     {
-        return $this->photo;
+        return $this->photoPath;
     }
 
     /**
