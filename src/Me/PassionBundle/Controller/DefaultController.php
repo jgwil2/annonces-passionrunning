@@ -58,8 +58,9 @@ class DefaultController extends Controller
     {
         // get content of request
         $content = $this->get("request")->getContent();
-        if (!empty($content)){
-            $params = json_decode($content);
+        if (!$content){
+
+            $params = json_decode($this->get("request")->get('form'));
 
             $em = $this->getDoctrine()->getManager();
 

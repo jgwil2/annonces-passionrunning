@@ -43,8 +43,8 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 	}]);
 
 // Submit an item
-annoncesControllers.controller('DepotCtrl', ['$scope', 'Data',
-	function($scope, Data){
+annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
+	function($scope, Data, $upload){
 		Data.categoriesAsync().then(function(categories){
 			$scope.categories = categories;
 		});
@@ -56,14 +56,24 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data',
 			}
 		};
 
+		$scope.onFileSelect = function($files){
+			$scope.file = $files;
+		}
+
 		$scope.processForm = function(){
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
 			}
 			else{
-				Data.submitAsync($scope.form).then(function(data){
-					console.log('data submitted')
-				});
+				$scope.upload = $upload.upload({
+					url: 'deposer-data',
+					method: 'POST',
+					data: {form: $scope.form},
+					file: $scope.file
+				})
+				.then(function(){
+					console.log('data sent')
+				})
 			}
 		}
 	}]);
