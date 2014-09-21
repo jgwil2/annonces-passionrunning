@@ -1,3 +1,5 @@
+'use strict';
+
 annoncesApp.directive('colorbox', function($compile, $rootScope){
   return {
     link: function(scope, element, attrs){

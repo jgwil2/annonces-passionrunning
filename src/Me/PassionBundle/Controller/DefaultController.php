@@ -157,6 +157,18 @@ class DefaultController extends Controller
         return $this->render('MePassionBundle:Default:index.html.twig');
     }
 
+    public function respondAction()
+    {
+
+    }
+
+    public function forgottenPassword()
+    {
+
+    }
+
+    // password protected area
+
     public function myPostsAction()
     {
 
