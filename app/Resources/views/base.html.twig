@@ -8,6 +8,7 @@
         {% block stylesheets %}
         <link rel="stylesheet" href="{{asset('bundles/mepassion/css/reset.css')}}" type="text/css" />
         <link rel="stylesheet" href="{{asset('bundles/mepassion/css/styles.css')}}" type="text/css" />
+        <link rel="stylesheet" href="{{asset('bundles/mepassion/css/colorbox.css')}}" type="text/css" />
         <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
         <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
         <link rel="shortcut icon" type="image/x-icon" href="asset('favicon.ico')}}" />
@@ -22,9 +23,10 @@
         <script src="{{asset('bundles/mepassion/js/publicApp/app.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/publicApp/controllers.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/publicApp/services.js')}}"></script>
+        <script src="{{asset('bundles/mepassion/js/publicApp/directives.js')}}"></script>
 
         <script type="text/javascript">
-        $(document).ready(function(){
+        /*$(document).ready(function(){
 
             $(".motdepasseoublie").colorbox({inline:true, width:"50%"});
             $(".motdepasseoublie").colorbox({rel:'motdepasseoublie', transition:"fade"});
@@ -37,7 +39,7 @@
                 $.colorbox.close()  
             });
 
-        });
+        });*/
         </script>
 
         <base href="/annonces-passionrunning/web/app_dev.php/">
@@ -45,32 +47,7 @@
     </head>
     <body ng-app="annoncesApp">
 
-        <div style='display:none'>
-            <div id="motdepasseoublie" rel="motdepasseoublie">
-                <div class="fermeture"><a href="#">X</a></div>
-                    <h2>MOT DE PASSE OUBLIE</h2>
-                    Saisissez votre adresse email pour recevoir votre mot de passe :
-                    <div class="formulaire">
-                    <input type="text" class="grandchamp" placeholder="Adresse email" required />
-                    <button>Recevoir mon mot de passe</button>
-                </div>
-            </div>
-        </div>
-
-        <div style='display:none'>
-            <div id="reponse" rel="reponse">
-                <div class="fermeture"><a  href="#">X</a></div>
-                <h2>Répondre à l'annonce</h2>
-                <h2>Titre annonce</h2>
-                <div class="formulaire">
-                    <input type="text" class="grandchamp" placeholder="Votre email" required />
-                    <textarea  placeholder="Mon message" required>Description de l'Annonce + prix</textarea>
-                    <button>Envoyer mon message</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="header">
+        <div id="header" ng-controller="HeaderCtrl">
             <div class="header">
                 <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/> </a>
                 <div class="connexion">
@@ -80,13 +57,13 @@
                     <input type="password" placeholder="mot de passe" id="password" name="_password"/>
                     <input type="submit" value="OK">
                     </form>
-                    <p><a href="#motdepasseoublie" class="motdepasseoublie">Mot de passe oublié</a></p>   
+                    <p><a href class="motdepasseoublie" colorbox="../bundles/mepassion/partials/motdepasseoublie.html">Mot de passe oublié</a></p>   
                 </div>
             </div>
         </div>
         {% verbatim %}
         <div id="nav" ng-controller="NavCtrl">
-            <div class="nav"> 
+            <div class="nav">
                 <ul>
                     <li><a href=" ">Accueil</a></li>
                     <li><a href="depot">Déposer une annonce</a></li>

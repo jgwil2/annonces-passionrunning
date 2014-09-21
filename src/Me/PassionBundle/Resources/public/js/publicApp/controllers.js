@@ -2,6 +2,12 @@
 
 var annoncesControllers = angular.module('annoncesControllers', []);
 
+// Header (base.html.twig)
+annoncesControllers.controller('HeaderCtrl', ['$scope',
+	function($scope){
+		// asynchronous submission of email address to go here...
+	}]);
+
 // Navigation (base.html.twig)
 annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 	function($scope, Data){
