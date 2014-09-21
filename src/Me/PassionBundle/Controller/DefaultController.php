@@ -157,9 +157,44 @@ class DefaultController extends Controller
         return $this->render('MePassionBundle:Default:index.html.twig');
     }
 
-    public function respondAction()
+    public function respondAction(Request $request)
     {
+        $content = $this->get("request")->getContent();
 
+        if (!empty($content)){
+            $params = json_decode($content);
+
+            $em = $this->getDoctrine()->getManager();
+
+            $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($params->annonceId);
+            $user = $em->getRepository('MePassionBundle:User')->findOneById($annonce->getUserId());
+
+            $text = $params->text;
+            $email = $params->email;
+
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Message à propos de votre annonce")
+                ->setFrom($email)
+                ->setTo($user->getEmail())
+                ->setBody($this->renderView(
+                    'MePassionBundle:Email:message.html.twig',
+                        array('text' => $text)
+                        ), 
+                    'text/html');
+
+            //$this->get('mailer')->send($message);
+
+            // add real response here
+            $response = new Response($content);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+
+        // add real response here
+        $response = new Response('nothing...');
+
+        return $response;
     }
 
     public function forgottenPassword()

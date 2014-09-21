@@ -6,7 +6,8 @@ var annoncesControllers = angular.module('annoncesControllers', []);
 annoncesControllers.controller('HeaderCtrl', ['$scope',
 	function($scope){
 		// asynchronous submission of email address to go here...
-	}]);
+	}
+]);
 
 // Navigation (base.html.twig)
 annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
@@ -15,7 +16,8 @@ annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 		Data.categoriesAsync().then(function(categories){
 			$scope.categories = categories;
 		});
-	}]);
+	}
+]);
 
 // List view (list.html)
 annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
@@ -32,11 +34,12 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 		if($routeParams.category){
 			$scope.category = $routeParams.category;
 		}
-	}]);
+	}
+]);
 
 // Single item view (annonce.html)
-annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
-	function($scope, Data, $routeParams){
+annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams', '$location',
+	function($scope, Data, $routeParams, $location){
 		Data.annoncesAsync().then(function(annonces){
 			// Get this page's annonce
 			for (var i = 0, len = annonces.length; i < len; i++) {
@@ -45,8 +48,29 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 					break;
 				}
 			}
+
+			// Set ID of annonce to be sent with message
+			$scope.response = {
+				"annonceId": $scope.annonce.id
+			};
+
+			// Send response message
+			$scope.sendResponse = function(){
+				if($scope.response.$invalid){
+					$scope.formError = true;
+				}
+				else{
+					// If no errors, redirect and close colorbox
+					Data.responseAsync($scope.response).then(function(data){
+						console.log('response submitted');
+						$location.path(" ");
+						$.colorbox.close();
+					});
+				}
+			}
 		});
-	}]);
+	}
+]);
 
 // Submit an item
 annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
@@ -82,4 +106,5 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
 				})
 			}
 		}
-	}]);
+	}
+]);

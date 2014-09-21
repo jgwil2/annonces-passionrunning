@@ -1,6 +1,6 @@
 'use strict';
 
-annoncesApp.directive('colorbox', function($compile, $rootScope){
+annoncesApp.directive('colorbox', function($compile, $rootScope, $location){
   return {
     link: function(scope, element, attrs){
       element.click('bind', function(){

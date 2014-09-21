@@ -10,6 +10,10 @@ me_passion_deposer:
     path:     /deposer-data
     defaults: { _controller: MePassionBundle:Default:submit }
 
+me_passion_reponse:
+    path:     /reponse-data
+    defaults: { _controller: MePassionBundle:Default:respond }
+
 me_passion_confirm:
     path:     /confirmer/{id}/{code}
     defaults: { _controller: MePassionBundle:Default:confirm }

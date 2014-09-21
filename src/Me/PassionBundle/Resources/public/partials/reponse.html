@@ -4,9 +4,11 @@
         <h2>Répondre à l'annonce</h2>
         <h2>{{annonce.titre}}</h2>
         <div class="formulaire">
-            <input type="text" class="grandchamp" placeholder="Votre email" required />
-            <textarea  placeholder="Mon message" required>Description de l'Annonce + prix</textarea>
-            <button>Envoyer mon message</button>
+            <form ng-submit="sendResponse()" novalidate>
+                <input ng-model="response.email" type="email" class="grandchamp" placeholder="Votre email" required />
+                <textarea ng-model="response.text" placeholder="Mon message" required></textarea>
+                <button type="submit">Envoyer mon message</button>
+            </form>
         </div>
     </div>
 </div>
