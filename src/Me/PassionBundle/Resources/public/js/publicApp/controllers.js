@@ -55,7 +55,7 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 // Single item view (annonce.html)
 annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams', '$location',
 	function($scope, Data, $routeParams, $location){
-		Data.annoncesAsync().then(function(annonces){
+		Data.retrieveAsync('annonces-data').then(function(annonces){
 			// Get this page's annonce
 			for (var i = 0, len = annonces.length; i < len; i++) {
 				if(annonces[i].id === $routeParams.annonceId){
@@ -90,7 +90,7 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 // Submit an item
 annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
 	function($scope, Data, $upload){
-		Data.categoriesAsync().then(function(categories){
+		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
 
