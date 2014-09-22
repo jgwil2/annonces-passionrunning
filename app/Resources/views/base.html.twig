@@ -35,8 +35,8 @@
                 <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/> </a>
                 <div class="connexion">
                     <h2>GERER VOS ANNONCES</h2>
-                    <form action="#" method="post" >
-                    <input type="text" placeholder="identifiant" id="username" name="_username" />
+                    <form action="{{path('me_passion_check')}}" method="post" >
+                    <input type="text" placeholder="identifiant" id="username" name="_username" value="{{last_username}}" />
                     <input type="password" placeholder="mot de passe" id="password" name="_password"/>
                     <input type="submit" value="OK">
                     </form>
@@ -77,6 +77,10 @@
         </div>
         <div class="flash" ng-show="flash">{{flash}}</div>
         {% endverbatim %}
+
+        {% if error %}
+        <div class="flash">Veuillez vérifier votre adresse mail / mot de passe</div>
+        {% endif %}
 
         {% block body %}{% endblock %}
 

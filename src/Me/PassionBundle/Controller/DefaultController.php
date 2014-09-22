@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Me\PassionBundle\Entity\User;
 use Me\PassionBundle\Entity\Annonce;
+use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class DefaultController extends Controller
 {
@@ -231,9 +232,35 @@ class DefaultController extends Controller
         return new RedirectResponse($this->generateUrl('me_passion_homepage'));
     }
 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        return $this->render('MePassionBundle:Default:index.html.twig');
+        $session = $request->getSession();
+
+        // get the login error if there is one
+        if($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $request->attributes->get(
+                SecurityContextInterface::AUTHENTICATION_ERROR
+            );
+        }
+        elseif(null !== $session && $session->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
+            $error = $session->get(SecurityContextInterface::AUTHENTICATION_ERROR);
+            $session->remove(SecurityContextInterface::AUTHENTICATION_ERROR);
+        }
+        else{
+            $error = '';
+        }
+
+        // last username entered by the user
+        $lastUsername = (null === $session) ? '' : $session->get(SecurityContextInterface::LAST_USERNAME);
+
+        return $this->render(
+            'MePassionBundle:Default:index.html.twig',
+            array(
+                // last username entered by the user
+                'last_username' => $lastUsername,
+                'error'         => $error,
+            )
+        );
     }
 
     // password protected area

@@ -26,6 +26,12 @@ me_passion_homepage:
     path:     /
     defaults: { _controller: MePassionBundle:Default:index }
 
+me_passion_check:
+    path:     /verification
+
+me_passion_logout:
+    path:     /deconnexion
+
 me_passion_product:
     path:     /annonce/{id}
     defaults: { _controller: MePassionBundle:Default:index }

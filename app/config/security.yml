@@ -1,12 +1,33 @@
 security:
+    encoders:
+        Me\PassionBundle\Entity\User:
+            algorithm: bcrypt
+
     providers:
-        in_memory:
-            memory: ~
+        users:
+            entity: { class: MePassionBundle:User, property: email }
 
     firewalls:
+        secured_area:
+            pattern: ^/
+            anonymous: ~
+            provider: users
+            form_login:
+                login_path: me_passion_homepage
+                check_path: me_passion_check
+                use_referer: true
+            logout:
+                path: /deconnexion
+                target: /
+
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
         default:
             anonymous: ~
+
+    # add all paths that need to be publicly available
+    # followed by pattern for secure pages (cf. vendanges)
+    access_control:
+        - { path: ^/web/app_dev.php, roles: IS_AUTHENTICATED_ANONYMOUSLY }
