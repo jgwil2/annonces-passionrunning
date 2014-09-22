@@ -17,8 +17,8 @@ security:
                 check_path: me_passion_check
                 use_referer: true
             logout:
-                path: /deconnexion
-                target: /
+                path: me_passion_logout
+                target: me_passion_homepage
 
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
