@@ -126,15 +126,14 @@ class DefaultController extends Controller
 
             //$this->get('mailer')->send($message);
 
-            // add real response here
-            $response = new Response(json_encode($annonce));
+            $response = new Response('{"message": "Un email vous a été envoyé pour valider votre annonce"}');
             $response->headers->set('Content-Type', 'application/json');
-
             return $response;
         }
 
-        // add error response here
-        
+        $response = new Response('{"message": "Votre annonce n\'a pas pu être traîtée"}');
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     public function respondAction(Request $request)
@@ -164,16 +163,13 @@ class DefaultController extends Controller
 
             //$this->get('mailer')->send($message);
 
-            // add real response here
-            $response = new Response($content);
+            $response = new Response('{"message": "Votre message a été envoyé"}');
             $response->headers->set('Content-Type', 'application/json');
-
             return $response;
         }
 
-        // add real response here
-        $response = new Response('nothing...');
-
+        $response = new Response('{"message": "Votre réponse n\'a pas pu être traîtée"}');
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 
@@ -205,18 +201,18 @@ class DefaultController extends Controller
                 //$this->get('mailer')->send($message);
 
                 // add real response here
-                $response = new Response('new password sent');
-                $response->headers->set('Content-Type', 'text/plain');
+                $response = new Response('{"message": "Un email vous a été envoyé"}');
+                $response->headers->set('Content-Type', 'application/json');
                 return $response;
             }
             // add real response here
-            $response = new Response('email not found');
-            $response->headers->set('Content-Type', 'text/plain');
+            $response = new Response('{"message": "Votre adresse mail n\'a pas été trouvée."}');
+            $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
         // add real response here
-        $response = new Response('nothing...');
-        $response->headers->set('Content-Type', 'text/plain');
+        $response = new Response('{"message": "Votre réponse n\'a pas pu être traîtée"}');
+        $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
 

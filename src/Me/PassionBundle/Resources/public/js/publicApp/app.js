@@ -4,7 +4,8 @@ var annoncesApp = angular.module('annoncesApp', [
 	'annoncesControllers',
 	'ngRoute',
 	'Data',
-	'angularFileUpload'
+	'angularFileUpload',
+	'Flash'
 ]);
 
 var DIR = '../bundles/mepassion/partials';
@@ -33,4 +34,14 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 			otherwise({
 				redirectTo: '/'
 			});
-	}]);
+	}
+]);
+
+// Clear flash messages on route change
+annoncesApp.run(['$rootScope', '$location', 'Flash',
+	function($rootScope, $location, Flash){
+		$rootScope.$on('$routeChangeStart', function(event, next, current){
+			Flash.clearMessage();
+		})
+	}
+]);

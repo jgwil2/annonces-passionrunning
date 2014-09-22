@@ -3,8 +3,8 @@
 var annoncesControllers = angular.module('annoncesControllers', []);
 
 // Header (base.html.twig)
-annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data',
-	function($scope, Data){
+annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
+	function($scope, Data, $location){
 
 		$scope.user = {};
 
