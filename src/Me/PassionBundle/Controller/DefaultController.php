@@ -194,7 +194,7 @@ class DefaultController extends Controller
 
                 $message = \Swift_Message::newInstance()
                     ->setSubject("Message à propos de votre annonce")
-                    ->setFrom($email)
+                    ->setFrom("contact@passionrunning.com")
                     ->setTo($user->getEmail())
                     ->setBody($this->renderView(
                         'MePassionBundle:Email:password.html.twig',
@@ -203,8 +203,21 @@ class DefaultController extends Controller
                         'text/html');
 
                 //$this->get('mailer')->send($message);
+
+                // add real response here
+                $response = new Response('new password sent');
+                $response->headers->set('Content-Type', 'text/plain');
+                return $response;
             }
+            // add real response here
+            $response = new Response('email not found');
+            $response->headers->set('Content-Type', 'text/plain');
+            return $response;
         }
+        // add real response here
+        $response = new Response('nothing...');
+        $response->headers->set('Content-Type', 'text/plain');
+        return $response;
     }
 
     public function confirmAction($id, $code)
@@ -228,11 +241,6 @@ class DefaultController extends Controller
     }
 
     // password protected area
-
-    public function myPostsAction()
-    {
-
-    }
 
     public function modifyAction()
     {

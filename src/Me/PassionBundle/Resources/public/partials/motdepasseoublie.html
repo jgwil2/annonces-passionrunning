@@ -4,8 +4,8 @@
         <h2>MOT DE PASSE OUBLIE</h2>
         Saisissez votre adresse email pour recevoir un nouveau mot de passe :
         <div class="formulaire">
-            <form ng-submit="sendEmail()" novalidate>
-                <input ng-model="email" type="text" class="grandchamp" placeholder="Adresse email" required />
+            <form name="emailForm" ng-submit="sendEmail()" novalidate>
+                <input ng-model="user.email" type="email" class="grandchamp" placeholder="Adresse email" required />
                 <button type="submit">Recevoir nouveau mot de passe</button>
             </form>
         </div>

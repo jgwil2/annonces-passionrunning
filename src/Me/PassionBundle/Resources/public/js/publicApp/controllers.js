@@ -6,13 +6,15 @@ var annoncesControllers = angular.module('annoncesControllers', []);
 annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data',
 	function($scope, Data){
 
+		$scope.user = {};
+
 		$scope.sendEmail = function(){
-			if($scope.email.$invalid){
+			if($scope.emailForm.$invalid){
 				$scope.formError = true;
 			}
 			else{
 				// If no errors, redirect and close colorbox
-				Data.submitAsync('email-data', $scope.email).then(function(data){
+				Data.submitAsync('email-data', $scope.user).then(function(data){
 					console.log('email submitted');
 					$location.path(" ");
 					$.colorbox.close();

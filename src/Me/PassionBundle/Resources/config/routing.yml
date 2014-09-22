@@ -14,7 +14,7 @@ me_passion_reponse:
     path:     /reponse-data
     defaults: { _controller: MePassionBundle:Default:respond }
 
-me_passion_reponse:
+me_passion_email:
     path:     /email-data
     defaults: { _controller: MePassionBundle:Default:forgottenPassword }
 
