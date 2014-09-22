@@ -2,26 +2,14 @@
 
 angular.module('Data', []).factory('Data', function($http){
 	var Data = {
-		annoncesAsync: function(){
-			var promise = $http.get('annonces-data', {cache: true}).then(function(response){
+		retrieveAsync: function(url){
+			var promise = $http.get(url, {cache: true}).then(function(response){
 				return response.data;
 			});
 			return promise;
 		},
-		categoriesAsync: function(){
-			var promise = $http.get('categories-data', {cache: true}).then(function(response){
-				return response.data;
-			});
-			return promise;
-		},
-		submitAsync: function(data){
-			var promise = $http.post('deposer-data', data).then(function(response){
-				return response.data;
-			});
-			return promise;
-		},
-		responseAsync: function(data){
-			var promise = $http.post('reponse-data', data).then(function(response){
+		submitAsync: function(url, data){
+			var promise = $http.post(url, data).then(function(response){
 				return response.data;
 			});
 			return promise;

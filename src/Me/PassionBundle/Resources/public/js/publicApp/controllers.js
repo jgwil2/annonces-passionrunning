@@ -3,9 +3,22 @@
 var annoncesControllers = angular.module('annoncesControllers', []);
 
 // Header (base.html.twig)
-annoncesControllers.controller('HeaderCtrl', ['$scope',
-	function($scope){
-		// asynchronous submission of email address to go here...
+annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data',
+	function($scope, Data){
+
+		$scope.sendEmail = function(){
+			if($scope.email.$invalid){
+				$scope.formError = true;
+			}
+			else{
+				// If no errors, redirect and close colorbox
+				Data.submitAsync('email-data', $scope.email).then(function(data){
+					console.log('email submitted');
+					$location.path(" ");
+					$.colorbox.close();
+				});
+			}
+		}
 	}
 ]);
 
@@ -13,7 +26,7 @@ annoncesControllers.controller('HeaderCtrl', ['$scope',
 annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 	function($scope, Data){
 		// Get categories from Data service
-		Data.categoriesAsync().then(function(categories){
+		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
 	}
@@ -23,11 +36,11 @@ annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 	function($scope, Data, $routeParams){
 		// Get annonces from Data service
-		Data.annoncesAsync().then(function(annonces){
+		Data.retrieveAsync('annonces-data').then(function(annonces){
 			$scope.annonces = annonces;
 		});
 
-		Data.categoriesAsync().then(function(categories){
+		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
 		// Set category for filtering
@@ -61,7 +74,7 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 				}
 				else{
 					// If no errors, redirect and close colorbox
-					Data.responseAsync($scope.response).then(function(data){
+					Data.submitAsync('response-data', $scope.response).then(function(data){
 						console.log('response submitted');
 						$location.path(" ");
 						$.colorbox.close();

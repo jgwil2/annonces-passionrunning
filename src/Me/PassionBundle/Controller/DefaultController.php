@@ -137,26 +137,6 @@ class DefaultController extends Controller
         
     }
 
-    public function confirmAction($id, $code)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($id);
-        if($annonce->getValidationCode() === $code){
-            $annonce->setValid(true);
-            $em->flush();
-            return new RedirectResponse($this->generateUrl('me_passion_product',
-                array('id' => $id)
-            ));
-        }
-        // add error message here
-        return new RedirectResponse($this->generateUrl('me_passion_homepage'));
-    }
-
-    public function indexAction()
-    {
-        return $this->render('MePassionBundle:Default:index.html.twig');
-    }
-
     public function respondAction(Request $request)
     {
         $content = $this->get("request")->getContent();
@@ -197,9 +177,54 @@ class DefaultController extends Controller
         return $response;
     }
 
-    public function forgottenPassword()
+    public function forgottenPasswordAction(Request $request)
     {
+        $content = $this->get("request")->getContent();
 
+        if(!empty($content)){
+            $params = json_decode($content);
+
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('MePassionBundle:User')->findOneByEmail($params->email);
+
+            if($user){
+                $password = substr(md5(uniqid(mt_rand(), true)), 0, 8);
+                $user->setPassword(password_hash($password, PASSWORD_BCRYPT));
+                $em->flush();
+
+                $message = \Swift_Message::newInstance()
+                    ->setSubject("Message à propos de votre annonce")
+                    ->setFrom($email)
+                    ->setTo($user->getEmail())
+                    ->setBody($this->renderView(
+                        'MePassionBundle:Email:password.html.twig',
+                            array('password' => $password)
+                            ),
+                        'text/html');
+
+                //$this->get('mailer')->send($message);
+            }
+        }
+    }
+
+    public function confirmAction($id, $code)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($id);
+        if($annonce->getValidationCode() === $code){
+            $annonce->setValid(true);
+            $em->flush();
+            return new RedirectResponse($this->generateUrl('me_passion_product',
+                array('id' => $id)
+            ));
+        }
+        // add error message here
+        return new RedirectResponse($this->generateUrl('me_passion_homepage'));
+    }
+
+    public function indexAction()
+    {
+        return $this->render('MePassionBundle:Default:index.html.twig');
     }
 
     // password protected area

@@ -14,6 +14,10 @@ me_passion_reponse:
     path:     /reponse-data
     defaults: { _controller: MePassionBundle:Default:respond }
 
+me_passion_reponse:
+    path:     /email-data
+    defaults: { _controller: MePassionBundle:Default:forgottenPassword }
+
 me_passion_confirm:
     path:     /confirmer/{id}/{code}
     defaults: { _controller: MePassionBundle:Default:confirm }
