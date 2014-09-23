@@ -206,7 +206,7 @@ class DefaultController extends Controller
                 return $response;
             }
 
-            $response = new Response('{"message": "Votre adresse mail n\'a pas été trouvée."}');
+            $response = new Response('{"message": "Votre adresse mail n\'a pas été trouvée"}');
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
@@ -278,8 +278,16 @@ class DefaultController extends Controller
 
             $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($params->id);
 
-            $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
-            $category = $em->merge($detachedCategory);
+            // if category is an object, deserialize and merge; else find matching category
+            if(gettype($params->category) == "object"){
+                $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+                $category = $em->merge($detachedCategory);
+            }
+            else{
+                $category = $em->getRepository('MePassionBundle:Category')->findOneById($params->category);
+            }
+
+            // set category and other params
             $annonce->setCategory($category);
             $annonce->setTitre($params->titre);
             $annonce->setTexte($params->texte);
@@ -288,18 +296,19 @@ class DefaultController extends Controller
             $annonce->setVille($params->ville);
             $annonce->setTel($params->tel);
 
+            // if photo is modified, set new photo
             if($this->get("request")->files->get('file')){
                 $annonce->setPhoto($this->get("request")->files->get('file'));
             }
 
             $em->flush();
 
-            $response = new Response('{"message": "done"}');
+            $response = new Response('{"message": "Votre annonce a été modifié"}');
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
 
-        $response = new Response('{"message": "nothing"}');
+        $response = new Response('{"message": "Vos modifications n\'ont pas pu être traîtées"}');
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }

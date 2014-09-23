@@ -27,17 +27,13 @@ secureAnnoncesApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: DIR + '/mesannonces.html',
 				controller: 'MesAnnoncesCtrl'
 			}).
-			when('/mesannonces/:annonceId', {
-				templateUrl: DIR + '/modifier.html',
-				controller: 'ModifierCtrl'
-			}).
 			when('/:category', {
 				templateUrl: DIR + '/list.html',
 				controller: 'ListCtrl'
 			}).
 			when('/annonce/:annonceId', {
-				templateUrl: DIR + '/annonce.html',
-				controller: 'AnnonceCtrl'
+				templateUrl: DIR + '/modifier.html',
+				controller: 'ModifierCtrl'
 			}).
 			otherwise({
 				redirectTo: '/'

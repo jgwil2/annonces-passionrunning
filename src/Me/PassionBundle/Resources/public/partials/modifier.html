@@ -1,4 +1,4 @@
-<div id="rubrique">
+<div id="rubrique" ng-show="userAnnonce">
 	<!--gauche-->
 	<div id="gauche" ng-hide="modify">
 		<!--début detailannonce-->
@@ -47,6 +47,7 @@
 			<div class="ligne">
 				<label>Catégorie : </label>
 				<select ng-model="form.category" ng-options="category.name for category in categories" ng-init="form.category = form.category.name" required >
+					<option value="" >{{annonce.category}}</option>
 					<option value="">Sélectionner</option>
 				</select><div class="check">&#x2713;</div>
 			</div>
@@ -92,6 +93,57 @@
 
 		<div class="btntelephone">
 			<p>Supprimer</p>
+		</div>
+	</div>
+	<!--//droite-->
+</div>
+<!--.rubrique-->
+
+<div id="rubrique" ng-show="otherAnnonce">
+	<!--gauche-->
+	<div id="gauche">
+		<!--début detailannonce-->
+		<div class="detailannonce">
+			<span class="detailtitreannonce">{{annonce.titre}}</span>
+			<!-- début photo -->
+			<div class="detailphotoannonce">
+				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgbig" />
+			</div>
+			<!-- // photo -->
+
+			<!-- début date -->
+			<div class="detaildateannonce">Date de mise en ligne : {{annonce.date}} -- {{annonce.time}}</div>
+			<!-- // date -->
+
+			<!-- début contenuannonce -->
+			<div class="detailcontenuannonce">
+				<p>Ville : {{annonce.ville}}</p>
+				<p>Code postal : {{annonce.code_postal}}</p>
+				<strong>Prix : </strong><span class="detailprixannonce">{{annonce.prix}}€</span>
+			</div>
+			<!-- // contenuannonce -->
+
+			<!-- début description -->
+			<div class="detaildescription">
+				<strong>Description :</strong>
+				<p>{{annonce.texte}}</p>
+			</div>
+			<!-- // description -->
+		</div>
+		<!--// detailannonce-->
+	</div>
+	<!--//gauche-->
+
+	<!--droite-->
+	<div id="droite">
+		<a href class="reponse" colorbox="../bundles/mepassion/partials/reponse.html"><div class="btnrepondre">
+			<p>Répondre</p>
+			<p>par email</p>
+		</div></a>
+
+		<div class="btntelephone">
+			<p>Téléphonez au</p>
+			<p>{{annonce.tel}}</p>
 		</div>
 	</div>
 	<!--//droite-->

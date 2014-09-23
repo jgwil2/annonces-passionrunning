@@ -3,7 +3,7 @@
 	<div id="gauche">
 		<h1>Mes annonces</h1>
 		<!--début blocannonce-->
-		<a href="mesannonces/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:annonces.query | filter:{user:user}">
+		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:annonces.query | filter:{user:user}">
 		<div class="blocannonce">
 			<!-- début date -->
 			<div class="dateannonce">
