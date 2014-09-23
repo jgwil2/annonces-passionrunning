@@ -37,9 +37,16 @@ annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 // List view (list.html)
 annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 	function($scope, Data, $routeParams){
+
+		$scope.annonces = {};
+
 		// Get annonces from Data service
 		Data.retrieveAsync('annonces-data').then(function(annonces){
 			$scope.annonces = annonces;
+			// Add region to annonce
+			for (var i = 0, j = annonces.length; i < j; i++) {
+				annonces[i].region = annonces[i].code_postal.substr(0,2);
+			};
 		});
 
 		Data.retrieveAsync('categories-data').then(function(categories){
@@ -88,8 +95,8 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 ]);
 
 // Submit an item
-annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
-	function($scope, Data, $upload){
+annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location', 'Flash',
+	function($scope, Data, $upload, $location, Flash){
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
@@ -116,9 +123,11 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload',
 					data: {form: $scope.form},
 					file: $scope.file
 				})
-				.then(function(){
-					console.log('data sent')
-				})
+				.then(function(response){
+					console.log('data sent');
+					Flash.showMessage(response.data.message)
+				});
+				$location.path(" ");
 			}
 		}
 	}

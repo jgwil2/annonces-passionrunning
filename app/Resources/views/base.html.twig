@@ -33,6 +33,7 @@
         <div id="header" ng-controller="HeaderCtrl">
             <div class="header">
                 <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/></a>
+
                 {% if app.user %}
                 <div class="connexion">
                     <h2>BIENVENUE {{ app.user.username | upper }}</h2>
@@ -49,6 +50,7 @@
                     <p><a href class="motdepasseoublie" colorbox="../bundles/mepassion/partials/motdepasseoublie.html">Mot de passe oublié</a></p>
                 </div>
                 {% endif %}
+                
             </div>
         </div>
         {% verbatim %}
