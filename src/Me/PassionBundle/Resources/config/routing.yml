@@ -10,6 +10,10 @@ me_passion_deposer:
     path:     /deposer-data
     defaults: { _controller: MePassionBundle:Default:submit }
 
+me_passion_modifier:
+    path:     /modifier-data
+    defaults: { _controller: MePassionBundle:Default:modify }
+
 me_passion_reponse:
     path:     /reponse-data
     defaults: { _controller: MePassionBundle:Default:respond }
@@ -31,6 +35,14 @@ me_passion_check:
 
 me_passion_logout:
     path:     /deconnexion
+
+me_passion_mesannonces:
+    path:     /mesannonces
+    defaults: { _controller: MePassionBundle:Default:index }
+
+me_passion_monannonces:
+    path:     /mesannonces/{id}
+    defaults: { _controller: MePassionBundle:Default:index }
 
 me_passion_product:
     path:     /annonce/{id}

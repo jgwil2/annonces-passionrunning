@@ -20,15 +20,28 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular-route.min.js"></script>
         <script src="{{asset('bundles/mepassion/js/vendor/ng-file-upload/angular-file-upload.min.js')}}"></script>
         <script src="{{asset('bundles/mepassion/js/vendor/jquery.colorbox-min.js')}}"></script>
-        <script src="{{asset('bundles/mepassion/js/publicApp/app.js')}}"></script>
-        <script src="{{asset('bundles/mepassion/js/publicApp/controllers.js')}}"></script>
-        <script src="{{asset('bundles/mepassion/js/publicApp/services.js')}}"></script>
-        <script src="{{asset('bundles/mepassion/js/publicApp/directives.js')}}"></script>
+
+        {% if app.user %}
+            <script>window.user = "{{user.email}}"</script>
+            <script src="{{asset('bundles/mepassion/js/secureApp/app.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/secureApp/controllers.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/secureApp/services.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/secureApp/directives.js')}}"></script>
+        {% else %}
+            <script src="{{asset('bundles/mepassion/js/publicApp/app.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/publicApp/controllers.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/publicApp/services.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/publicApp/directives.js')}}"></script>
+        {% endif %}
 
         <base href="/annonces-passionrunning/web/app_dev.php/">
 
     </head>
+    {% if app.user %}
+    <body ng-app="secureAnnoncesApp">
+    {% else %}
     <body ng-app="annoncesApp">
+    {% endif %}
 
         <div id="header" ng-controller="HeaderCtrl">
             <div class="header">
@@ -37,6 +50,7 @@
                 {% if app.user %}
                 <div class="connexion">
                     <h2>BIENVENUE {{ app.user.username | upper }}</h2>
+                    <p><a href="mesannonces">Mes annonces</a></p>
                     <p><a href="{{path('me_passion_logout')}}" target="_self">Me déconnecter</a></p>
                 </div>
                 {% else %}
@@ -50,7 +64,7 @@
                     <p><a href class="motdepasseoublie" colorbox="../bundles/mepassion/partials/motdepasseoublie.html">Mot de passe oublié</a></p>
                 </div>
                 {% endif %}
-                
+
             </div>
         </div>
         {% verbatim %}

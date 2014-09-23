@@ -1,7 +1,7 @@
 'use strict';
 
-var annoncesApp = angular.module('annoncesApp', [
-	'annoncesControllers',
+var secureAnnoncesApp = angular.module('secureAnnoncesApp', [
+	'secureAnnoncesControllers',
 	'ngRoute',
 	'Data',
 	'angularFileUpload',
@@ -11,7 +11,7 @@ var annoncesApp = angular.module('annoncesApp', [
 var DIR = '../bundles/mepassion/partials';
 //PHOTO_DIR = '../../web/uploads/'
 
-annoncesApp.config(['$routeProvider', '$locationProvider',
+secureAnnoncesApp.config(['$routeProvider', '$locationProvider',
 	function($routeProvider, $locationProvider){
 		$locationProvider.html5Mode(true).hashPrefix('!');
 		$routeProvider.
@@ -22,6 +22,14 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 			when('/depot',{
 				templateUrl: DIR + '/depot.html',
 				controller: 'DepotCtrl'
+			}).
+			when('/mesannonces', {
+				templateUrl: DIR + '/mesannonces.html',
+				controller: 'MesAnnoncesCtrl'
+			}).
+			when('/mesannonces/:annonceId', {
+				templateUrl: DIR + '/modifier.html',
+				controller: 'ModifierCtrl'
 			}).
 			when('/:category', {
 				templateUrl: DIR + '/list.html',
@@ -38,7 +46,7 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 ]);
 
 // Clear flash messages on route change
-annoncesApp.run(['$rootScope', '$location', 'Flash',
+secureAnnoncesApp.run(['$rootScope', '$location', 'Flash',
 	function($rootScope, $location, Flash){
 		$rootScope.$on('$routeChangeStart', function(event, next, current){
 			Flash.clearMessage();

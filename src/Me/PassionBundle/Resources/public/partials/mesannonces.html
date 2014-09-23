@@ -1,0 +1,57 @@
+<div id="rubrique">
+	<!--gauche-->
+	<div id="gauche">
+		<h1>Mes annonces</h1>
+		<!--début blocannonce-->
+		<a href="mesannonces/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:annonces.query | filter:{user:user}">
+		<div class="blocannonce">
+			<!-- début date -->
+			<div class="dateannonce">
+				<p>{{annonce.date}}</p>
+				<p>{{annonce.time}}</p>
+			</div>
+			<!-- // date -->
+			<!-- début photo -->
+			<div class="photoannonce">
+				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgliste" />
+			</div>
+			<!-- // photo -->
+			<!-- début contenuannonce -->
+			<div class="contenuannonce">
+				<span class="titreannonce">{{annonce.titre}}</span>
+				<span class="texteannonce">
+					<p>{{annonce.category}}</p>
+					<p>{{annonce.ville}} / {{annonce.code_postal}}</p>
+				</span>
+				<span class="prixannonce">{{annonce.prix}}€</span>
+			</div>
+			<!-- // contenuannonce -->
+			</div>
+		</a>
+		<!--// blocannonce-->
+	</div><!--//gauche-->
+
+	<!--droite-->
+	<div id="droite">
+		<h2>Filtrez</h2>
+		<div class="titre-top">
+			<h4>Par mot-clé</h4>
+			<div class="stripe-line"></div>
+		</div>
+		<input type="text" id="search" placeholder="recherchez ..." ng-model="annonces.query" />
+
+		<div class="titre-top">
+		<h4>Par Catégorie</h4>
+		<div class="stripe-line"></div>
+		</div>
+		
+		<div id="categories">
+			<p ng-repeat="category in categories">
+				<a href="{{category.name}}">{{category.name}}</a>
+			</p>
+		</div>
+
+	</div>
+	<!--//droite-->
+
+</div><!--.rubrique-->

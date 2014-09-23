@@ -19,7 +19,7 @@ class DefaultController extends Controller
         // get all annonces
     	$conn = $this->get('database_connection');
     	$entity = $conn->fetchAll(
-    		'SELECT Annonce.`id`, `titre`, `texte`, `prix`, `photoPath`, `code_postal`, `ville`, `tel`, `valid`, 
+    		'SELECT Annonce.`id`, `category_id`, `titre`, `texte`, `prix`, `photoPath`, `code_postal`, `ville`, `tel`, `valid`, 
     		DATE_FORMAT(Annonce.`dateCreated`, \'%d/%m/%Y\') AS date,
     		DATE_FORMAT(Annonce.`dateCreated`, \'%H:%i\') AS time,
     		Category.name AS category, 
@@ -201,17 +201,16 @@ class DefaultController extends Controller
 
                 //$this->get('mailer')->send($message);
 
-                // add real response here
                 $response = new Response('{"message": "Un email vous a été envoyé"}');
                 $response->headers->set('Content-Type', 'application/json');
                 return $response;
             }
-            // add real response here
+
             $response = new Response('{"message": "Votre adresse mail n\'a pas été trouvée."}');
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
-        // add real response here
+
         $response = new Response('{"message": "Votre réponse n\'a pas pu être traîtée"}');
         $response->headers->set('Content-Type', 'application/json');
         return $response;
@@ -235,6 +234,7 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $session = $request->getSession();
+        $user = $this->get('security.context')->getToken()->getUser();
 
         // get the login error if there is one
         if($request->attributes->has(SecurityContextInterface::AUTHENTICATION_ERROR)) {
@@ -259,6 +259,7 @@ class DefaultController extends Controller
                 // last username entered by the user
                 'last_username' => $lastUsername,
                 'error'         => $error,
+                'user'          => $user
             )
         );
     }
@@ -267,7 +268,40 @@ class DefaultController extends Controller
 
     public function modifyAction()
     {
+        // get content of request
+        $content = $this->get("request")->getContent();
+        if (!$content){
 
+            $params = json_decode($this->get("request")->get('form'));
+
+            $em = $this->getDoctrine()->getManager();
+
+            $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($params->id);
+
+            $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+            $category = $em->merge($detachedCategory);
+            $annonce->setCategory($category);
+            $annonce->setTitre($params->titre);
+            $annonce->setTexte($params->texte);
+            $annonce->setPrix($params->prix);
+            $annonce->setCodePostal($params->code);
+            $annonce->setVille($params->ville);
+            $annonce->setTel($params->tel);
+
+            if($this->get("request")->files->get('file')){
+                $annonce->setPhoto($this->get("request")->files->get('file'));
+            }
+
+            $em->flush();
+
+            $response = new Response('{"message": "done"}');
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+
+        $response = new Response('{"message": "nothing"}');
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     public function deactivateAction()

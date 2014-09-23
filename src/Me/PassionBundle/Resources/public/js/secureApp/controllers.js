@@ -1,9 +1,9 @@
 'use strict';
 
-var annoncesControllers = angular.module('annoncesControllers', []);
+var secureAnnoncesControllers = angular.module('secureAnnoncesControllers', []);
 
 // Header (base.html.twig)
-annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
+secureAnnoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
 	function($scope, Data, $location){
 
 		$scope.user = {};
@@ -16,7 +16,7 @@ annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
 				// If no errors, redirect and close colorbox
 				Data.submitAsync('email-data', $scope.user).then(function(data){
 					console.log('email submitted');
-					$location.path(" ");
+					$location.path("");
 					$.colorbox.close();
 				});
 			}
@@ -25,7 +25,7 @@ annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
 ]);
 
 // Navigation (base.html.twig)
-annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
+secureAnnoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 	function($scope, Data){
 		// Get categories from Data service
 		Data.retrieveAsync('categories-data').then(function(categories){
@@ -35,7 +35,7 @@ annoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 ]);
 
 // List view (list.html)
-annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
+secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 	function($scope, Data, $routeParams){
 
 		$scope.annonces = {};
@@ -60,7 +60,7 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 ]);
 
 // Single item view (annonce.html)
-annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams', '$location',
+secureAnnoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams', '$location',
 	function($scope, Data, $routeParams, $location){
 		Data.retrieveAsync('annonces-data').then(function(annonces){
 			// Get this page's annonce
@@ -85,7 +85,7 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 					// If no errors, redirect and close colorbox
 					Data.submitAsync('response-data', $scope.response).then(function(data){
 						console.log('response submitted');
-						$location.path(" ");
+						$location.path("");
 						$.colorbox.close();
 					});
 				}
@@ -95,7 +95,7 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 ]);
 
 // Submit an item (depot.html)
-annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location', 'Flash',
+secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location', 'Flash',
 	function($scope, Data, $upload, $location, Flash){
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
@@ -127,7 +127,99 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$loca
 					console.log('data sent');
 					Flash.showMessage(response.data.message)
 				});
-				$location.path(" ");
+				$location.path("");
+			}
+		}
+	}
+]);
+
+secureAnnoncesControllers.controller('MesAnnoncesCtrl', ['$scope', '$window', 'Data',
+	function($scope, $window, Data){
+		// Get user id
+		$scope.user = $window.user;
+
+		// Get annonces from Data service
+		Data.retrieveAsync('annonces-data').then(function(annonces){
+			$scope.annonces = annonces;
+		});
+
+		Data.retrieveAsync('categories-data').then(function(categories){
+			$scope.categories = categories;
+		});
+	}
+]);
+
+secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams', '$upload', '$location',
+	function($scope, Data, $routeParams, $upload, $location){
+		Data.retrieveAsync('categories-data').then(function(categories){
+			$scope.categories = categories;
+		});
+
+		Data.retrieveAsync('annonces-data').then(function(annonces){
+			// Get this page's annonce
+			for (var i = 0, len = annonces.length; i < len; i++) {
+				if(annonces[i].id === $routeParams.annonceId){
+					$scope.annonce = annonces[i];
+
+					$scope.form = {
+							"acceptConditions": "1",
+							"code": annonces[i].code_postal,
+							"ville": annonces[i].ville,
+							"category": {
+								"name": annonces[i].category
+							},
+							"titre": annonces[i].titre,
+							"texte": annonces[i].texte,
+							"prix": annonces[i].prix,
+							"tel": annonces[i].tel
+						};
+
+					$scope.form.id = annonces[i].id;
+					$scope.form.category = annonces[i].category_id
+
+					break;
+				}
+			}
+		});
+
+		$scope.onFileSelect = function($files){
+			$scope.file = $files;
+		}
+
+		$scope.modify = false;
+
+		$scope.toggleView = function(){
+			$scope.modify = $scope.modify ? false : true;
+		}
+
+		$scope.processForm = function(){
+			if($scope.submitForm.$invalid){
+				$scope.formError = true;
+			}
+			else if($scope.file){
+				$scope.upload = $upload.upload({
+					url: 'modifier-data',
+					method: 'POST',
+					data: {form: $scope.form},
+					file: $scope.file
+				})
+				.then(function(response){
+					console.log('data sent');
+					Flash.showMessage(response.data.message)
+				});
+				$location.path("");
+			}
+			else{
+				$scope.upload = $upload.upload({
+					url: 'modifier-data',
+					method: 'POST',
+					data: {form: $scope.form},
+				})
+				.then(function(response){
+					console.log('data sent');
+					Flash.showMessage(response.data.message)
+				});
+				$location.path("");
 			}
 		}
 	}

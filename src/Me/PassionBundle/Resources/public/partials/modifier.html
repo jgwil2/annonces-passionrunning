@@ -1,0 +1,99 @@
+<div id="rubrique">
+	<!--gauche-->
+	<div id="gauche" ng-hide="modify">
+		<!--début detailannonce-->
+		<div class="detailannonce">
+			<span class="detailtitreannonce">{{annonce.titre}}</span>
+			<!-- début photo -->
+			<div class="detailphotoannonce">
+				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgbig" />
+			</div>
+			<!-- // photo -->
+
+			<!-- début date -->
+			<div class="detaildateannonce">Date de mise en ligne : {{annonce.date}} -- {{annonce.time}}</div>
+			<!-- // date -->
+
+			<!-- début contenuannonce -->
+			<div class="detailcontenuannonce">
+				<p>Ville : {{annonce.ville}}</p>
+				<p>Code postal : {{annonce.code_postal}}</p>
+				<strong>Prix : </strong><span class="detailprixannonce">{{annonce.prix}}€</span>
+			</div>
+			<!-- // contenuannonce -->
+
+			<!-- début description -->
+			<div class="detaildescription">
+				<strong>Description :</strong>
+				<p>{{annonce.texte}}</p>
+			</div>
+			<!-- // description -->
+		</div>
+		<!--// detailannonce-->
+	</div>
+
+	<div id="gauche" ng-show="modify">
+		<form name="submitForm" ng-submit="processForm()" novalidate>
+			<h2>Localisation</h2>
+			<div class="ligne">
+				<label>Code postal : </label>
+				<input ng-model="form.code" ng-model-options="{ updateOn: 'blur' }" type="text" ng-pattern="/^\d{5}$/" style="width: 60px;" size="5" required /><div class="check">&#x2713;</div>
+			</div>
+			<div class="ligne">
+				<label>Ville : </label>
+				<input ng-model="form.ville" type="text" style="width: 150px;" required /><div class="check">&#x2713;</div>
+			</div>
+			<h2>Votre Annonce</h2>
+			<div class="ligne">
+				<label>Catégorie : </label>
+				<select ng-model="form.category" ng-options="category.name for category in categories" ng-init="form.category = form.category.name" required >
+					<option value="">Sélectionner</option>
+				</select><div class="check">&#x2713;</div>
+			</div>
+
+			<div class="ligne">
+				<label>Titre : </label>
+				<input ng-model="form.titre" type="text" placeholder="Titre de votre annonce" style="width: 150px;" required /><div class="check">&#x2713;</div>
+			</div>
+
+			<div class="ligne">
+				<label>Description : </label>
+				<textarea ng-model="form.texte">{{annonce.description}}</textarea>
+			</div>
+
+			<div class="ligne">
+				<label>Prix : </label>
+				<input ng-model="form.prix" type="text" style="width: 60px;" ng-pattern="/[1-9]\d*(?:\[.,]\d{0,2})?/" required /> €<div class="check">&#x2713;</div>
+			</div>
+
+			<div class="ligne">
+				<label>Téléphone : </label>
+				<input ng-model="form.tel" type="text" placeholder="exemple: 03 88 00 00 00" style="width: 150px;" ng-pattern="/^0[1-68]([,. ]?[0-9]{2}){4}$/" required /><div class="check">&#x2713;</div>
+			</div>
+
+			<h2>Photo</h2>
+			<div class="ligne">
+				<input type="file" class="file" ng-file-select="onFileSelect($files)">
+				<small>taille maximum : 500Ko</small>
+			</div>
+
+			<div class="error" ng-show="formError" >Veuillez remplir le formulaire avant de l'envoyer</div>
+			<button type="submit" >Modifier mon annonce</button>
+		</form>
+	</div>
+	<!--//gauche-->
+
+	<!--droite-->
+	<div id="droite">
+		<a href class="reponse" ng-click="toggleView()"><div class="btnrepondre">
+			<p ng-hide="modify">Modifier</p>
+			<p ng-show="modify">Anuller</p>
+		</div></a>
+
+		<div class="btntelephone">
+			<p>Supprimer</p>
+		</div>
+	</div>
+	<!--//droite-->
+</div>
+<!--.rubrique-->

@@ -1,6 +1,6 @@
 'use strict';
 
-annoncesApp.directive('colorbox', ['$compile', '$rootScope', '$location',
+secureAnnoncesApp.directive('colorbox', ['$compile', '$rootScope', '$location',
   function($compile, $rootScope, $location){
     return {
       link: function(scope, element, attrs){
@@ -20,7 +20,7 @@ annoncesApp.directive('colorbox', ['$compile', '$rootScope', '$location',
   }
 ]);
 
-annoncesApp.directive('closeColorbox', function(){
+secureAnnoncesApp.directive('closeColorbox', function(){
   return {
     link: function(scope, element, attrs){
       element.click('bind', function(){
