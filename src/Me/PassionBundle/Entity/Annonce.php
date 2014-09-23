@@ -108,10 +108,18 @@ class Annonce
      */
     private $dateCreated;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+
     public function __construct()
     {
         $this->dateCreated = new \DateTime();
         $this->valid = 0;
+        $this->active = 1;
     }
 
     /**
@@ -473,5 +481,51 @@ class Annonce
     public function getValid()
     {
         return $this->valid;
+    }
+
+    /**
+     * Set dateCreated
+     *
+     * @param \DateTime $dateCreated
+     * @return Annonce
+     */
+    public function setDateCreated($dateCreated)
+    {
+        $this->dateCreated = $dateCreated;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreated
+     *
+     * @return \DateTime 
+     */
+    public function getDateCreated()
+    {
+        return $this->dateCreated;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     * @return Annonce
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean 
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }
