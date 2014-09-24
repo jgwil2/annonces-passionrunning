@@ -5,7 +5,8 @@ var secureAnnoncesApp = angular.module('secureAnnoncesApp', [
 	'ngRoute',
 	'Data',
 	'angularFileUpload',
-	'Flash'
+	'Flash',
+	'CustomCache'
 ]);
 
 var DIR = '../bundles/mepassion/partials';

@@ -184,7 +184,7 @@ class Annonce
      */
     public function removeUpload()
     {
-        if($photo == $this->getAbsolutePath()){
+        if($this->photo == $this->getAbsolutePath()){
             unlink($photo);
         }
     }

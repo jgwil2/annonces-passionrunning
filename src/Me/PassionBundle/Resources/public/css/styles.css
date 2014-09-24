@@ -543,6 +543,39 @@ font-family: 'Roboto Condensed', sans-serif;
 
 #reponse button:hover{background-color: #1698de; cursor: pointer;}
 
+#supprimer{
+  margin-right: auto;
+  margin-left: auto;
+  display: block; 
+  width: 400px;
+  height: 400px;
+  background-color: #ffffff;
+  z-index: 10000;
+  padding: 10px;
+  //display: none;
+  }
+
+
+#supprimer .fermeture{position: absolute; right: 15px; top: 10px; color: #1698de; font-size: 24px;  font-family: 'Yanone Kaffeesatz', sans-serif; }
+#supprimer .fermeture a{color: #1698de; text-decoration: none;}
+#supprimer .fermeture a:hover{color: #1698de; text-decoration: none;}
+#supprimer h2{margin-top: 30px; color: #1698de; font-size: 30px;  font-family: 'Yanone Kaffeesatz', sans-serif;  margin-bottom: 20px;}
+
+#supprimer button{
+  width: 400px;
+  margin-top: 10px;
+  border: none;
+  background-color: #1698de;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 24px;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+#supprimer button:hover{background-color: #1698de; cursor: pointer;}
+
 .check{
   display: none;
   font-size: 14px;

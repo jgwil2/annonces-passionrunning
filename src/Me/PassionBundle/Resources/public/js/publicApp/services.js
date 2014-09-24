@@ -4,7 +4,9 @@ angular.module('Flash', []).factory('Flash', ['$rootScope',
 	function($rootScope){
 		var Flash = {
 			showMessage: function(message){
-				$rootScope.flash = message;
+				if(message){
+					$rootScope.flash = message;
+				}
 			},
 			clearMessage: function(){
 				$rootScope.flash = "";

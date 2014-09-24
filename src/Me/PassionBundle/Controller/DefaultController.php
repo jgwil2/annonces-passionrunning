@@ -268,6 +268,8 @@ class DefaultController extends Controller
 
     public function modifyAction()
     {
+        $user = $this->get('security.context')->getToken()->getUser();
+
         // get content of request
         $content = $this->get("request")->getContent();
         if (!$content){
@@ -278,32 +280,38 @@ class DefaultController extends Controller
 
             $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($params->id);
 
-            // if category is an object, deserialize and merge; else find matching category
-            if(gettype($params->category) == "object"){
-                $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
-                $category = $em->merge($detachedCategory);
+            if($annonce->getUserId() == $user){
+                // if category is an object, deserialize and merge; else find matching category
+                if(gettype($params->category) == "object"){
+                    $detachedCategory = $this->container->get('serializer')->deserialize(json_encode($params->category), 'Me\PassionBundle\Entity\Category', 'json');
+                    $category = $em->merge($detachedCategory);
+                }
+                else{
+                    $category = $em->getRepository('MePassionBundle:Category')->findOneById($params->category);
+                }
+
+                // set category and other params
+                $annonce->setCategory($category);
+                $annonce->setTitre($params->titre);
+                $annonce->setTexte($params->texte);
+                $annonce->setPrix($params->prix);
+                $annonce->setCodePostal($params->code);
+                $annonce->setVille($params->ville);
+                $annonce->setTel($params->tel);
+
+                // if photo is modified, set new photo
+                if($this->get("request")->files->get('file')){
+                    $annonce->setPhoto($this->get("request")->files->get('file'));
+                }
+
+                $em->flush();
+
+                $response = new Response('{"message": "Votre annonce a été modifiée"}');
+                $response->headers->set('Content-Type', 'application/json');
+                return $response;
             }
-            else{
-                $category = $em->getRepository('MePassionBundle:Category')->findOneById($params->category);
-            }
 
-            // set category and other params
-            $annonce->setCategory($category);
-            $annonce->setTitre($params->titre);
-            $annonce->setTexte($params->texte);
-            $annonce->setPrix($params->prix);
-            $annonce->setCodePostal($params->code);
-            $annonce->setVille($params->ville);
-            $annonce->setTel($params->tel);
-
-            // if photo is modified, set new photo
-            if($this->get("request")->files->get('file')){
-                $annonce->setPhoto($this->get("request")->files->get('file'));
-            }
-
-            $em->flush();
-
-            $response = new Response('{"message": "Votre annonce a été modifié"}');
+            $response = new Response('{"message": "Vous devez vous connecter pour effectuer cette action"}');
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
@@ -313,8 +321,25 @@ class DefaultController extends Controller
         return $response;
     }
 
-    public function deactivateAction()
+    public function deleteAction($id)
     {
+        $user = $this->get('security.context')->getToken()->getUser();
 
+        $em = $this->getDoctrine()->getManager();
+
+        $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($id);
+
+        if($annonce->getUserId() == $user){
+            $em->remove($annonce);
+            $em->flush();
+
+            $response = new Response('{"message": "Votre annonce a été supprimée"}');
+            $response->headers->set('Content-Type', 'application/json');
+            return $response;
+        }
+
+        $response = new Response('{"message": "Vous devez vous connecter pour effectuer cette action"}');
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

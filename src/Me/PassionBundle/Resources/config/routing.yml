@@ -14,6 +14,10 @@ me_passion_modifier:
     path:     /modifier-data
     defaults: { _controller: MePassionBundle:Default:modify }
 
+me_passion_delete:
+    path:     /supprimer-data/{id}
+    defaults: { _controller: MePassionBundle:Default:delete }
+
 me_passion_reponse:
     path:     /reponse-data
     defaults: { _controller: MePassionBundle:Default:respond }

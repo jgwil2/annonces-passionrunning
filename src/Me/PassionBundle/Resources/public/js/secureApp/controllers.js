@@ -3,8 +3,8 @@
 var secureAnnoncesControllers = angular.module('secureAnnoncesControllers', []);
 
 // Header (base.html.twig)
-secureAnnoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
-	function($scope, Data, $location){
+secureAnnoncesControllers.controller('HeaderCtrl', ['$scope', 'Data',
+	function($scope, Data){
 
 		$scope.user = {};
 
@@ -14,9 +14,7 @@ secureAnnoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location
 			}
 			else{
 				// If no errors, redirect and close colorbox
-				Data.submitAsync('email-data', $scope.user).then(function(data){
-					console.log('email submitted');
-					$location.path("");
+				Data.submitAsync('email-data', $scope.user).then(function(response){
 					$.colorbox.close();
 				});
 			}
@@ -60,8 +58,8 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 ]);
 
 // Submit an item (depot.html)
-secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location', 'Flash',
-	function($scope, Data, $upload, $location, Flash){
+secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash',
+	function($scope, Data, $upload, Flash){
 		$scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
@@ -90,10 +88,8 @@ secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 
 					file: $scope.file
 				})
 				.then(function(response){
-					console.log('data sent');
 					Flash.showMessage(response.data.message)
 				});
-				$location.path("");
 			}
 		}
 	}
@@ -116,8 +112,8 @@ secureAnnoncesControllers.controller('MesAnnoncesCtrl', ['$scope', '$window', 'D
 ]);
 
 // Single annonce (respond or modify depending on ownership)
-secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams', '$upload', '$location', '$window', 'Flash',
-	function($scope, Data, $routeParams, $upload, $location, $window, Flash){
+secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams', '$upload', '$window', 'Flash', 'CustomCache',
+	function($scope, Data, $routeParams, $upload, $window, Flash, CustomCache){
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
@@ -167,9 +163,7 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 				}
 				else{
 					// If no errors, redirect and close colorbox
-					Data.submitAsync('response-data', $scope.response).then(function(data){
-						console.log('response submitted');
-						$location.path("");
+					Data.submitAsync('reponse-data', $scope.response).then(function(data){
 						$.colorbox.close();
 					});
 				}
@@ -198,10 +192,9 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 					file: $scope.file
 				})
 				.then(function(response){
-					console.log('data sent');
+					CustomCache.removeAll();
 					Flash.showMessage(response.data.message)
 				});
-				$location.path("");
 			}
 			else{
 				$scope.upload = $upload.upload({
@@ -210,11 +203,17 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 					data: {form: $scope.form},
 				})
 				.then(function(response){
-					console.log('data sent');
+					CustomCache.removeAll();
 					Flash.showMessage(response.data.message)
 				});
-				$location.path("");
 			}
+		}
+
+		$scope.confirmDelete = function(){
+			Data.deleteAsync('supprimer-data/' + $scope.form.id).then(function(response){
+				CustomCache.removeAll();
+				$.colorbox.close();
+			})
 		}
 	}
 ]);

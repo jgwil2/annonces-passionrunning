@@ -3,8 +3,8 @@
 var annoncesControllers = angular.module('annoncesControllers', []);
 
 // Header (base.html.twig)
-annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
-	function($scope, Data, $location){
+annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data',
+	function($scope, Data){
 
 		$scope.user = {};
 
@@ -15,8 +15,6 @@ annoncesControllers.controller('HeaderCtrl', ['$scope', 'Data', '$location',
 			else{
 				// If no errors, redirect and close colorbox
 				Data.submitAsync('email-data', $scope.user).then(function(data){
-					console.log('email submitted');
-					$location.path(" ");
 					$.colorbox.close();
 				});
 			}
@@ -60,8 +58,8 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 ]);
 
 // Single item view (annonce.html)
-annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams', '$location',
-	function($scope, Data, $routeParams, $location){
+annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
+	function($scope, Data, $routeParams){
 		Data.retrieveAsync('annonces-data').then(function(annonces){
 			// Get this page's annonce
 			for (var i = 0, len = annonces.length; i < len; i++) {
@@ -83,9 +81,7 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 				}
 				else{
 					// If no errors, redirect and close colorbox
-					Data.submitAsync('response-data', $scope.response).then(function(data){
-						console.log('response submitted');
-						$location.path(" ");
+					Data.submitAsync('reponse-data', $scope.response).then(function(data){
 						$.colorbox.close();
 					});
 				}
@@ -95,8 +91,8 @@ annoncesControllers.controller('AnnonceCtrl', ['$scope', 'Data', '$routeParams',
 ]);
 
 // Submit an item (depot.html)
-annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location', 'Flash',
-	function($scope, Data, $upload, $location, Flash){
+annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash',
+	function($scope, Data, $upload, Flash){
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
@@ -124,10 +120,8 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$loca
 					file: $scope.file
 				})
 				.then(function(response){
-					console.log('data sent');
 					Flash.showMessage(response.data.message)
 				});
-				$location.path(" ");
 			}
 		}
 	}
