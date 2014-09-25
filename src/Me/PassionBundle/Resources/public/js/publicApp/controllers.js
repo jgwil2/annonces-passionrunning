@@ -106,11 +106,15 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash
 
 		$scope.onFileSelect = function($files){
 			$scope.file = $files;
+			$scope.fileError = true;
 		}
 
 		$scope.processForm = function(){
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
+			}
+			else if($scope.file[0].size > 500000){
+				$scope.fileError = true;
 			}
 			else{
 				$scope.upload = $upload.upload({

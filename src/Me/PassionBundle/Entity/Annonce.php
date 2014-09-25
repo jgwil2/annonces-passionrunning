@@ -119,7 +119,7 @@ class Annonce
     {
         $this->dateCreated = new \DateTime();
         $this->valid = 0;
-        $this->active = 1;
+        $this->active = 0;
     }
 
     /**

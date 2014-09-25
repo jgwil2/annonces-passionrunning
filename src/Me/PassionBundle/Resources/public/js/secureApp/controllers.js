@@ -80,6 +80,9 @@ secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
 			}
+			else if($scope.file[0].size > 500000){
+				$scope.fileError = true;
+			}
 			else{
 				$scope.upload = $upload.upload({
 					url: 'deposer-data',
@@ -183,6 +186,9 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 		$scope.processForm = function(){
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
+			}
+			else if($scope.file[0].size > 500000){
+				$scope.fileError = true;
 			}
 			else if($scope.file){
 				$scope.upload = $upload.upload({

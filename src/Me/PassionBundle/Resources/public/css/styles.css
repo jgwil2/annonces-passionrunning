@@ -601,3 +601,11 @@ font-family: 'Roboto Condensed', sans-serif;
   padding: 0.5em;
   border: solid 1px #aacbe2;
 }
+
+#flash {
+  margin:10px auto;
+  width:990px;
+  background: #cee5f5;
+  padding: 0.5em;
+  border: solid 1px #aacbe2;
+}

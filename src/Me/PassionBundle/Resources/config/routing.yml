@@ -48,6 +48,10 @@ me_passion_monannonces:
     path:     /mesannonces/{id}
     defaults: { _controller: MePassionBundle:Default:index }
 
+me_passion_confirmation_message:
+    path:     /confirmation
+    defaults: { _controller: MePassionBundle:Default:index }
+
 me_passion_product:
     path:     /annonce/{id}
     defaults: { _controller: MePassionBundle:Default:index }

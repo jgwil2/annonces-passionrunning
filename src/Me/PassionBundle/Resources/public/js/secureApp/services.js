@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('Flash', []).factory('Flash', ['$rootScope', '$location',
-	function($rootScope, $location){
+angular.module('Flash', []).factory('Flash', ['$rootScope', '$location', '$anchorScroll',
+	function($rootScope, $location, $anchorScroll){
 		var Flash = {
 			showMessage: function(message){
 				if(message){
 					$rootScope.flash = message;
+					window.scrollTo(0,0);
 				}
 			},
 			clearMessage: function(){

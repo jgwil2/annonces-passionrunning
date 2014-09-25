@@ -6,6 +6,7 @@ angular.module('Flash', []).factory('Flash', ['$rootScope',
 			showMessage: function(message){
 				if(message){
 					$rootScope.flash = message;
+					window.scrollTo(0,0);
 				}
 			},
 			clearMessage: function(){

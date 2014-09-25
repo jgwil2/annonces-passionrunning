@@ -127,7 +127,7 @@ class DefaultController extends Controller
 
             //$this->get('mailer')->send($message);
 
-            $response = new Response('{"message": "Un email vous a été envoyé pour valider votre annonce"}');
+            $response = new Response('{"message": "Votre annonce a été modifiée. Vous allez recevoir un email prochainement qui vous permettra de valider cette annonce. Cliquez sur le lien présent dans le mail."}');
             $response->headers->set('Content-Type', 'application/json');
             return $response;
         }
@@ -223,10 +223,24 @@ class DefaultController extends Controller
         if($annonce->getValidationCode() === $code){
             $annonce->setValid(true);
             $em->flush();
-            return new RedirectResponse($this->generateUrl('me_passion_product',
-                array('id' => $id)
-            ));
+
+            // send mail to Davy
+            $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneByValidationCode($validationCode);
+            $message = \Swift_Message::newInstance()
+                ->setSubject("Confirmation d'annonce")
+                ->setFrom("contact@passionrunning.com")
+                ->setTo("yvadonline@gmail.com")
+                ->setBody($this->renderView(
+                    'MePassionBundle:Email:double-validation.html.twig',
+                        array('id' => $annonce->getId())
+                        ), 
+                    'text/html');
+
+            //$this->get('mailer')->send($message);
+
+            return new RedirectResponse($this->generateUrl('me_passion_confirmation_message'));
         }
+
         // add error message here
         return new RedirectResponse($this->generateUrl('me_passion_homepage'));
     }
@@ -299,6 +313,11 @@ class DefaultController extends Controller
                 $annonce->setVille($params->ville);
                 $annonce->setTel($params->tel);
 
+                // de-validate annonce after modification/new validation code
+                $annonce->setValid(false);
+                $validationCode = substr(md5(uniqid(mt_rand(), true)), 0, 8);
+                $annonce->setValidationCode($validationCode);
+
                 // if photo is modified, set new photo
                 if($this->get("request")->files->get('file')){
                     $annonce->setPhoto($this->get("request")->files->get('file'));
@@ -306,7 +325,22 @@ class DefaultController extends Controller
 
                 $em->flush();
 
-                $response = new Response('{"message": "Votre annonce a été modifiée"}');
+                // send validation email
+                $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneByValidationCode($validationCode);
+                $link = "http://annonces.passionrunning.com/confirmer/".$annonce->getId()."/".$validationCode;
+                $message = \Swift_Message::newInstance()
+                    ->setSubject("Confirmation d'annonce")
+                    ->setFrom("contact@passionrunning.com")
+                    ->setTo($user->getEmail())
+                    ->setBody($this->renderView(
+                        'MePassionBundle:Email:confirm.html.twig',
+                            array('link' => $link)
+                            ),
+                        'text/html');
+
+                //$this->get('mailer')->send($message);
+
+                $response = new Response('{"message": "Votre annonce a été modifiée. Vous allez recevoir un email prochainement qui vous permettra de valider cette annonce. Cliquez sur le lien présent dans le mail."}');
                 $response->headers->set('Content-Type', 'application/json');
                 return $response;
             }

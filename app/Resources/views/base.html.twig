@@ -34,7 +34,7 @@
             <script src="{{asset('bundles/mepassion/js/publicApp/directives.js')}}"></script>
         {% endif %}
 
-        <base href="/annonces-passionrunning/web/app_dev.php/">
+        <base href="/annonces-app/web/app_dev.php/">
 
     </head>
     {% if app.user %}
@@ -98,7 +98,7 @@
                 </ul>
             </div>
         </div>
-        <div class="flash" ng-show="flash">{{flash}}</div>
+        <div id="flash" ng-show="flash">{{flash}}</div>
         {% endverbatim %}
 
         {% if error %}

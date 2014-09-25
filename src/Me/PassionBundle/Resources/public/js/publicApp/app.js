@@ -23,6 +23,9 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: DIR + '/depot.html',
 				controller: 'DepotCtrl'
 			}).
+			when('/confirmation',{
+				templateUrl: DIR + '/confirmer.html'
+			}).
 			when('/:category', {
 				templateUrl: DIR + '/list.html',
 				controller: 'ListCtrl'
@@ -34,14 +37,5 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 			otherwise({
 				redirectTo: '/'
 			});
-	}
-]);
-
-// Clear flash messages on route change
-annoncesApp.run(['$rootScope', '$location', 'Flash',
-	function($rootScope, $location, Flash){
-		$rootScope.$on('$routeChangeStart', function(event, next, current){
-			Flash.clearMessage();
-		})
 	}
 ]);

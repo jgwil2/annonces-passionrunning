@@ -24,6 +24,9 @@ secureAnnoncesApp.config(['$routeProvider', '$locationProvider',
 				templateUrl: DIR + '/depot.html',
 				controller: 'DepotCtrl'
 			}).
+			when('/confirmation',{
+				templateUrl: DIR + '/confirmer.html'
+			}).
 			when('/mesannonces', {
 				templateUrl: DIR + '/mesannonces.html',
 				controller: 'MesAnnoncesCtrl'

@@ -64,6 +64,7 @@
 				<input type="checkbox" ng-model="form.user.contact" ng-true-value="1" ng-false-value="0" /> J'accepte de me faire contacter par les partenaires du site http://annonces.passionrunning.com
 			</div>
 			<div class="error" ng-show="formError" >Veuillez remplir le formulaire avant de l'envoyer</div>
+			<div class="error" ng-show="fileError" >La photo que vous avez choisie est trop lourde. Veuillez choisir une photo qui fait moins de 500ko.</div>
 			<button type="submit" >Envoyer mon annonce</button>
 		</form>
 	</div>
