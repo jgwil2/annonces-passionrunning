@@ -36,7 +36,7 @@ secureAnnoncesControllers.controller('NavCtrl', ['$scope', 'Data',
 secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 	function($scope, Data, $routeParams){
 
-		$scope.annonces = {};
+		$scope.search = {};
 
 		// Get annonces from Data service
 		Data.retrieveAsync('annonces-data').then(function(annonces){
@@ -50,9 +50,36 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
+
 		// Set category for filtering
 		if($routeParams.category){
 			$scope.category = $routeParams.category;
+		}
+
+		// Set amount for filtering
+		$scope.matchPrix = function(annonce){
+			var prix = parseInt(annonce.prix);
+			if($scope.search.minPrix && $scope.search.maxPrix){
+				if(prix >= $scope.search.minPrix && prix <= $scope.search.maxPrix){
+					return true;
+				}
+				return false;
+			}
+			else if($scope.search.minPrix && !$scope.search.maxPrix){
+				if(prix >= $scope.search.minPrix){
+					return true;
+				}
+				return false;
+			}
+			else if(!$scope.search.minPrix && $scope.search.maxPrix){
+				if(prix <= $scope.search.maxPrix){
+					return true;
+				}
+				return false;
+			}
+			else{
+				return true;
+			}
 		}
 	}
 ]);

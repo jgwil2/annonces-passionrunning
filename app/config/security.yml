@@ -15,6 +15,7 @@ security:
             form_login:
                 login_path: me_passion_homepage
                 check_path: me_passion_check
+                default_target_path: me_passion_mesannonces
                 use_referer: true
             logout:
                 path: me_passion_logout

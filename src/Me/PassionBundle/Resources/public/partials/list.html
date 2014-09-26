@@ -3,7 +3,7 @@
 	<div id="gauche">
 		<h1>Les dernières annonces</h1>
 		<!--début blocannonce-->
-		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:annonces.query | filter:{region:filter.region}">
+		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:search.query | filter:{region:search.region} | filter:matchPrix">
 		<div class="blocannonce">
 			<!-- début date -->
 			<div class="dateannonce">
@@ -38,7 +38,7 @@
 			<h4>Par mot-clé</h4>
 			<div class="stripe-line"></div>
 		</div>
-		<input type="text" id="search" placeholder="recherchez ..." ng-model="annonces.query" />
+		<input type="text" id="search" placeholder="recherchez ..." ng-model="search.query" />
 
 		<div class="titre-top">
 		<h4>Par Catégorie</h4>
@@ -56,7 +56,7 @@
 			<div class="stripe-line"></div>
 		</div>
 
-		<select name="departement" id="departement" ng-model="filter.region">
+		<select name="departement" id="departement" ng-model="search.region">
 			<option value="">Sélectionner</option>
 			<option value="">-- Toute la France --</option>
 			<option value="01">01 Ain</option>
@@ -156,6 +156,17 @@
 			<option value="94">94 Val-de-Marne</option>
 			<option value="95">95 Val-d'Oise</option>
 		</select>
+
+		<div class="titre-top">
+			<h4> Par prix</h4>
+			<div class="stripe-line"></div>
+		</div>
+		<div class="ligne">
+			<label>Minimum : </label><input type="text" value="" ng-model="search.minPrix" style="width: 40px;">
+		</div>
+		<div class="ligne">
+			<label>Maximum : </label><input type="text" value="" ng-model="search.maxPrix" style="width: 40px;">
+		</div>
 	</div>
 	<!--//droite-->
 

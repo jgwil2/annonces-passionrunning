@@ -29,7 +29,8 @@ class DefaultController extends Controller
     		ON Annonce.category_id = Category.id
     		INNER JOIN User
     		ON Annonce.user_id = User.id
-    		AND Annonce.valid = 1');
+    		AND Annonce.valid = 1
+            AND Annonce.active = 1');
 
         // serialize and send to client
     	$serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
@@ -225,11 +226,10 @@ class DefaultController extends Controller
             $em->flush();
 
             // send mail to Davy
-            $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneByValidationCode($validationCode);
             $message = \Swift_Message::newInstance()
                 ->setSubject("Confirmation d'annonce")
                 ->setFrom("contact@passionrunning.com")
-                ->setTo("yvadonline@gmail.com")
+                ->setTo("contact@passionrunning.com")
                 ->setBody($this->renderView(
                     'MePassionBundle:Email:double-validation.html.twig',
                         array('id' => $annonce->getId())
@@ -315,6 +315,7 @@ class DefaultController extends Controller
 
                 // de-validate annonce after modification/new validation code
                 $annonce->setValid(false);
+                $annonce->setActive(false);
                 $validationCode = substr(md5(uniqid(mt_rand(), true)), 0, 8);
                 $annonce->setValidationCode($validationCode);
 

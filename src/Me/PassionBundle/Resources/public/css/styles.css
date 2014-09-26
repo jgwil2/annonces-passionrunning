@@ -293,6 +293,7 @@ float: left;
 .titre-top {
     padding: 5px 0;
     margin-bottom: 5px;
+    margin-top: 15px;
 }
 .stripe-line {
     background: url("../images/stripe.png") repeat scroll 0 0 rgba(0, 0, 0, 0);

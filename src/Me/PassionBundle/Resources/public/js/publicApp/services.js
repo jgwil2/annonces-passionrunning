@@ -17,11 +17,17 @@ angular.module('Flash', []).factory('Flash', ['$rootScope',
 	}
 ]);
 
-angular.module('Data', []).factory('Data', ['$http', 'Flash',
-	function($http, Flash){
+angular.module('CustomCache', []).factory('CustomCache', ['$cacheFactory',
+	function($cacheFactory){
+		return $cacheFactory('customData');
+	}
+]);
+
+angular.module('Data', []).factory('Data', ['$http', 'Flash', 'CustomCache',
+	function($http, Flash, CustomCache){
 		var Data = {
 			retrieveAsync: function(url){
-				var promise = $http.get(url, {cache: true})
+				var promise = $http.get(url, {cache: CustomCache})
 					.then(function(response){
 						Flash.showMessage(response.data.message);
 						return response.data;
@@ -30,6 +36,14 @@ angular.module('Data', []).factory('Data', ['$http', 'Flash',
 			},
 			submitAsync: function(url, data){
 				var promise = $http.post(url, data)
+					.then(function(response){
+						Flash.showMessage(response.data.message);
+						return response.data;
+					});
+				return promise;
+			},
+			deleteAsync: function(url){
+				var promise = $http.delete(url)
 					.then(function(response){
 						Flash.showMessage(response.data.message);
 						return response.data;

@@ -5,7 +5,8 @@ var annoncesApp = angular.module('annoncesApp', [
 	'ngRoute',
 	'Data',
 	'angularFileUpload',
-	'Flash'
+	'Flash',
+	'CustomCache'
 ]);
 
 var DIR = '../bundles/mepassion/partials';
@@ -31,8 +32,8 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 				controller: 'ListCtrl'
 			}).
 			when('/annonce/:annonceId', {
-				templateUrl: DIR + '/annonce.html',
-				controller: 'AnnonceCtrl'
+				templateUrl: DIR + '/modifier.html',
+				controller: 'ModifierCtrl'
 			}).
 			otherwise({
 				redirectTo: '/'
