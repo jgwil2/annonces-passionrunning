@@ -50,6 +50,12 @@ class User implements UserInterface, \Serializable
     protected $annonces;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinColumn(name="roles_id", referencedColumnName="id")
+     */
+    private $roles;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(name="contact", type="boolean")
@@ -60,6 +66,7 @@ class User implements UserInterface, \Serializable
     {
         $this->dateCreated = new \DateTime();
         $this->annonces = new ArrayCollection();
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -139,7 +146,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->roles->toArray();
     }
 
     /**

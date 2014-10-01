@@ -40,6 +40,10 @@ me_passion_check:
 me_passion_logout:
     path:     /deconnexion
 
+me_passion_admin:
+    path:     /admin
+    defaults: { _controller: MePassionBundle:Default:admin }
+
 me_passion_mesannonces:
     path:     /mesannonces
     defaults: { _controller: MePassionBundle:Default:index }

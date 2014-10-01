@@ -377,4 +377,23 @@ class DefaultController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
+    public function adminAction()
+    {
+        // get all non-active annonces
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('MePassionBundle:Annonce');
+
+        $query = $repository->createQueryBuilder('a')
+            ->where('a.valid = ?1 AND a.active = ?2')
+            ->orderBy('a.dateCreated')
+            ->setParameters(array(1 => '1', 2 => '0'))
+            ->getQuery();
+
+        $annonces = $query->getResult();
+
+        return $this->render('MePassionBundle:Default:admin.html.twig',
+            array('annonces' => $annonces)
+        );
+    }
 }

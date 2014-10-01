@@ -31,4 +31,5 @@ security:
     # add all paths that need to be publicly available
     # followed by pattern for secure pages (cf. vendanges)
     access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
