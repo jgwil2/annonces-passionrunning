@@ -381,16 +381,20 @@ class DefaultController extends Controller
     public function adminAction()
     {
         // get all non-active annonces
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('MePassionBundle:Annonce');
-
-        $query = $repository->createQueryBuilder('a')
-            ->where('a.valid = ?1 AND a.active = ?2')
-            ->orderBy('a.dateCreated')
-            ->setParameters(array(1 => '1', 2 => '0'))
-            ->getQuery();
-
-        $annonces = $query->getResult();
+        $conn = $this->get('database_connection');
+        $annonces = $conn->fetchAll(
+            'SELECT Annonce.`id`, `user_id`, `category_id`, `titre`, `texte`, `prix`, `photoPath`, `code_postal`, `ville`, `tel`, `valid`, 
+            DATE_FORMAT(Annonce.`dateCreated`, \'%d/%m/%Y\') AS date,
+            DATE_FORMAT(Annonce.`dateCreated`, \'%H:%i\') AS time,
+            Category.name AS category, 
+            User.email AS user
+            FROM Annonce 
+            INNER JOIN Category 
+            ON Annonce.category_id = Category.id
+            INNER JOIN User
+            ON Annonce.user_id = User.id
+            AND Annonce.valid = 1
+            AND Annonce.active = 0');
 
         return $this->render('MePassionBundle:Default:admin.html.twig',
             array('annonces' => $annonces)

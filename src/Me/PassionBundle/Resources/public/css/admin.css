@@ -1,0 +1,112 @@
+body{
+	
+	
+	background:url(../images/body-bg5.png) repeat;
+	
+	font-family: 'Arial', serif;
+		
+}
+
+
+.right{float: right;}
+.left{float: left;}
+
+
+
+
+
+#rubrique{  margin:10px auto; width:990px; display: block; height:auto; z-index:10; overflow:hidden;  position:relative; 
+  }
+  
+  
+  
+#rubrique #gauche{width: 960px; margin: 5px; float: left; background: none repeat scroll 0 0 #FFFFFF;
+    box-shadow: 0 0 2px #B5B5B5;
+    padding: 4px; }
+    
+    
+    /* ANNONCES */
+    
+    
+    #rubrique #gauche .blocannonce{ width: 940px; height: auto; overflow: hidden; display: block; margin-right: auto; margin-left: auto; border-bottom: 1px solid #888; padding: 10px; margin-top: 10px; margin-bottom: 10px;}
+
+    
+  #rubrique #gauche .imgliste{width: 160px; height: 120px;}
+  #rubrique #gauche .validation{width: 180px; height: auto; float: left;}
+   #rubrique #gauche .dateannonce{width: 110px; float: left; font-size: 12px; color: #888;}
+      #rubrique #gauche .photoannonce{width: 170px; float: left;}
+      
+      
+      #rubrique #gauche .valid{background-color: #4fa92b;}
+      #rubrique #gauche .supp{background-color: #FF0000;}
+  #rubrique #gauche .contenuannonce{width: 480px; float: left; color: #333; font-size: 14px;}
+  
+  #rubrique #gauche .titreannonce{font-weight: normal; font-size: 24px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; display: block;}
+  
+  #rubrique #gauche .prixannonce{display: block; font-weight: bold; font-size: 18px;}
+  
+   #rubrique #gauche .detaildateannonce{font-size: 12px; margin-top: 10px; color: #333; width: 580px; margin-left: auto; margin-right: auto; display: block;}
+    
+    #rubrique #gauche .detailtitreannonce{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; display: block; width: 580px; margin-right: auto; margin-left: auto;}
+    
+    
+   #rubrique #gauche .detailcontenuannonce{margin-top: 10px; margin-bottom: 10px; border-bottom: 1px solid #EEE; border-top: 1px solid #EEE; padding: 10px; width: 560px; margin-left: auto; margin-right: auto; display: block; }
+    
+    
+    #rubrique #gauche .detaildescription{margin-top: 10px; margin-bottom: 10px; padding: 10px; width: 560px; margin-left: auto; margin-right: auto; display: block;}
+    
+   #rubrique #gauche .detailprixannonce{font-size: 18px; color: #eb6707; font-weight: bold;}
+   
+      #rubrique #gauche .imgbig{width: 580px; display: block; margin-left: auto; margin-right: auto; border: 5px solid #EEE;}
+    
+    
+    
+    
+    
+    
+
+
+   
+#rubrique a{color:#333333; text-decoration: none; }
+
+#rubrique a:hover{ color:#1698de; text-decoration: none;}
+   
+#rubrique h1{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de;}
+
+
+#rubrique h2{font-weight: normal; font-size: 36px; font-family: 'Yanone Kaffeesatz', sans-serif; color: #1698de; margin-bottom: 10px;}
+
+
+
+
+
+
+
+
+
+
+#gauche button {
+	
+  background: #4f4e4f;
+  border: none;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -khtml-border-radius: 20px;
+  border-radius: 20px;
+  color: #ffffff;
+  display: block;
+  font: 18px Arial;
+  letter-spacing: 1px;
+  margin: auto;
+  padding: 7px 25px;
+  text-shadow: 0 1px 1px #000000;
+  text-transform: uppercase;
+  margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+
+#gauche button:hover {
+  background: #1e2506;
+  cursor: pointer;
+}

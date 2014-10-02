@@ -66,7 +66,7 @@ class User implements UserInterface, \Serializable
     {
         $this->dateCreated = new \DateTime();
         $this->annonces = new ArrayCollection();
-        $this->roles = new ArrayCollection();
+        //$this->roles = new ArrayCollection();
     }
 
     /**
@@ -146,7 +146,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        return array($this->roles->getRole());
     }
 
     /**

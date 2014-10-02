@@ -390,7 +390,11 @@ float: left;
 
 
 
-#gauche .ligne{display: block; margin-bottom: 3px; font-size: 11px;}
+#gauche .ligne{
+  display: block; 
+  margin-bottom: 3px; 
+  font-size: 11px;
+}
 
 
 

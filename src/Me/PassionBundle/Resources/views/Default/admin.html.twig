@@ -5,8 +5,8 @@
 	<meta name="description" content="Petites annnonces d'articles de course à pied d'occasion" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-	<link rel="stylesheet" href="css/reset.css" type="text/css" />
-	<link rel="stylesheet" href="css/styles.css" type="text/css" />
+	<link rel="stylesheet" href="{{asset('bundles/mepassion/css/reset.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{asset('bundles/mepassion/css/admin.css')}}" type="text/css" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz' rel='stylesheet' type='text/css'>
@@ -24,8 +24,8 @@
 			<div class="blocannonce">
 				<!-- début date -->
 				<div class="dateannonce">
-					<p>3 Septembre</p>
-					<p>18:44</p>
+					<p>{{annonce.date}}</p>
+					<p>{{annonce.time}}</p>
 				</div>
 				<!-- // date -->
 
@@ -39,8 +39,8 @@
 					<span class="texteannonce">
 					<p>{{annonce.texte}}</p>
 					<p>Téléphone : {{annonce.tel}}</p>
-					<p>Email : {{annonce.user.email}}</p>
-					<p>Rubrique : {{annonce.category.name}}</p>
+					<p>Email : {{annonce.user}}</p>
+					<p>Rubrique : {{annonce.category}}</p>
 					<p>Lieu : {{annonce.code_postal}} {{annonce.ville}}</p>		
 					</span>
 					<span class="prixannonce">{{annonce.prix}} €</span>
