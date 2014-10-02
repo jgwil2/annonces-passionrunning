@@ -50,6 +50,9 @@
                 {% if app.user %}
                 <div class="connexion">
                     <h2>BIENVENUE {{ app.user.username | upper }}</h2>
+                    {% if app.user.roles[0] == 'ROLE_ADMIN' %}
+                    <p><a href="{{path('me_passion_admin')}}" target="_self">Administration</a></p>
+                    {% endif %}
                     <p><a href="mesannonces">Mes annonces</a></p>
                     <p><a href="{{path('me_passion_logout')}}" target="_self">Me déconnecter</a></p>
                 </div>

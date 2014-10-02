@@ -6,6 +6,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 	<link rel="stylesheet" href="{{asset('bundles/mepassion/css/reset.css')}}" type="text/css" />
+	<link rel="stylesheet" href="{{asset('bundles/mepassion/css/styles.css')}}" type="text/css" />
 	<link rel="stylesheet" href="{{asset('bundles/mepassion/css/admin.css')}}" type="text/css" />
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -14,9 +15,43 @@
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 </head>
 <body>
+
+    <div id="header">
+        <div class="header">
+            <a href="http://www.passionrunning.com/" title="Accueil"><img alt="" src="{{asset('bundles/mepassion/images/annonces-courseapied.png')}}" width="328" height="102" class="logo"/></a>
+
+            {% if app.user %}
+            <div class="connexion">
+                <h2>BIENVENUE {{ app.user.username | upper }}</h2>
+                <p><a href="{{path('me_passion_admin')}}">Administration</a></p>
+                <p><a href="mesannonces">Mes annonces</a></p>
+                <p><a href="{{path('me_passion_logout')}}" target="_self">Me déconnecter</a></p>
+            </div>
+            {% else %}
+            <div class="connexion">
+                <h2>GERER VOS ANNONCES</h2>
+                <form action="{{path('me_passion_check')}}" method="post" >
+                <input type="text" placeholder="identifiant" id="username" name="_username" value="{{last_username}}" />
+                <input type="password" placeholder="mot de passe" id="password" name="_password"/>
+                <input type="submit" value="OK">
+                </form>
+                <p><a href class="motdepasseoublie" colorbox="../bundles/mepassion/partials/motdepasseoublie.html">Mot de passe oublié</a></p>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
 	<div id="rubrique">
 		<!--gauche-->
 		<div id="gauche">
+
+			{% for flashMessage in app.session.flashbag.get('notice') %}
+			    <div class="flash">
+			        {{ flashMessage }}
+			    </div>
+			{% endfor %}
+
 			<h1>Annonces à valider</h1>
 
 			{% for annonce in annonces %}
@@ -47,8 +82,16 @@
 				</div>
 				<!-- // contenuannonce -->
 				<div class="validation">
-					<button class="valid">Valider l'annonce</button>
-					<button class="supp">Supprimer l'annonce</button>
+					<form action="{{path('me_passion_admin')}}" method="POST">
+						<input type="hidden" name="action" value="validate"/>
+						<input type="hidden" name="id" value="{{annonce.id}}"/>
+						<button type="submit" class="valid">Valider l'annonce</button>
+					</form>
+					<form action="{{path('me_passion_admin')}}" method="POST">
+						<input type="hidden" name="action" value="delete"/>
+						<input type="hidden" name="id" value="{{annonce.id}}"/>
+						<button type="submit" class="supp">Supprimer l'annonce</button>
+					</form>
 				</div>
 			</div>
 			<!--// blocannonce-->

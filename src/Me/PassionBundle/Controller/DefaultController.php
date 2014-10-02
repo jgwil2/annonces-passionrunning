@@ -59,10 +59,11 @@ class DefaultController extends Controller
     public function submitAction(Request $request)
     {
         // get content of request
-        $content = $this->get("request")->getContent();
-        if (!$content){
+        $content = $this->get("request")->get('form');
 
-            $params = json_decode($this->get("request")->get('form'));
+        if(!empty($content)){
+
+            $params = json_decode($content);
 
             $em = $this->getDoctrine()->getManager();
 
@@ -378,8 +379,35 @@ class DefaultController extends Controller
         return $response;
     }
 
-    public function adminAction()
+    public function adminAction(Request $request)
     {
+        if($request->getMethod() == 'POST'){
+
+            $id = $this->get('request')->get('id');
+            $em = $this->getDoctrine()->getManager();
+            $annonce = $em->getRepository('MePassionBundle:Annonce')->findOneById($id);
+
+            if($this->get('request')->get('action') == 'validate'){
+                $annonce->setActive(true);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Annonce validée'
+                );
+            }
+
+            if($this->get('request')->get('action') == 'delete'){
+                $em->remove($annonce);
+                $em->flush();
+
+                $this->get('session')->getFlashBag()->add(
+                    'notice',
+                    'Annonce supprimée'
+                );
+            }
+        }
+
         // get all non-active annonces
         $conn = $this->get('database_connection');
         $annonces = $conn->fetchAll(
@@ -394,7 +422,8 @@ class DefaultController extends Controller
             INNER JOIN User
             ON Annonce.user_id = User.id
             AND Annonce.valid = 1
-            AND Annonce.active = 0');
+            AND Annonce.active = 0
+            ORDER BY Annonce.`dateCreated`');
 
         return $this->render('MePassionBundle:Default:admin.html.twig',
             array('annonces' => $annonces)
