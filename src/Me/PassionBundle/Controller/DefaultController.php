@@ -381,6 +381,7 @@ class DefaultController extends Controller
 
     public function adminAction(Request $request)
     {
+        // if data is posted check if it is a validate or delete request
         if($request->getMethod() == 'POST'){
 
             $id = $this->get('request')->get('id');
