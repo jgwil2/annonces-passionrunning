@@ -46,7 +46,8 @@ class DefaultController extends Controller
         $conn = $this->get('database_connection');
         $entity = $conn->fetchAll(
             'SELECT * 
-            FROM Category');
+            FROM Category
+            ORDER BY name');
 
         // serialize and send to client
         $serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');
@@ -75,6 +76,7 @@ class DefaultController extends Controller
                 $newUser->setEmail($params->user->email);
                 $newUser->setPassword(password_hash($params->user->password, PASSWORD_BCRYPT));
                 $newUser->setContact($params->user->contact);
+                $newUser->setRoles($em->getRepository('MePassionBundle:Role')->findOneByRole('ROLE_USER'));
 
                 $em->persist($newUser);
                 $em->flush();

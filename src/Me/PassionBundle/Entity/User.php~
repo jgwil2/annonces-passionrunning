@@ -51,7 +51,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
-     *
+     * @ORM\JoinColumn(name="roles_id", referencedColumnName="id")
      */
     private $roles;
 
@@ -66,7 +66,6 @@ class User implements UserInterface, \Serializable
     {
         $this->dateCreated = new \DateTime();
         $this->annonces = new ArrayCollection();
-
     }
 
     /**
@@ -146,7 +145,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return $this->roles->toArray();
+        return array($this->roles->getRole());
     }
 
     /**

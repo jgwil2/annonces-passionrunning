@@ -66,7 +66,6 @@ class User implements UserInterface, \Serializable
     {
         $this->dateCreated = new \DateTime();
         $this->annonces = new ArrayCollection();
-        //$this->roles = new ArrayCollection();
     }
 
     /**
@@ -257,5 +256,18 @@ class User implements UserInterface, \Serializable
     public function getAnnonces()
     {
         return $this->annonces;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param \Me\PassionBundle\Entity\Role $roles
+     * @return User
+     */
+    public function setRoles(\Me\PassionBundle\Entity\Role $roles = null)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }
