@@ -41,9 +41,9 @@
 					<a href >{{$index + 1}}</a>
 				</li>
 				<li class="disabled" ng-hide="currentPage == getNumberOfPages() - 3 || currentPage == getNumberOfPages() - 2">
-					<a href>...</a>
+					<a href ng-hide="getNumberOfPages() < 5">...</a>
 				</li>
-				<li ng-class="{active: currentPage == getNumberOfPages() - 1}">
+				<li ng-class="{active: currentPage == getNumberOfPages() - 1}" ng-hide="getNumberOfPages() < 4">
 					<a href ng-click="setCurrentPage(getNumberOfPages() - 1)" ng-hide="currentPage == getNumberOfPages() - 2">{{getNumberOfPages()}}</a>
 				</li>
 				<li ng-class="{disabled: currentPage == getNumberOfPages() - 1}">

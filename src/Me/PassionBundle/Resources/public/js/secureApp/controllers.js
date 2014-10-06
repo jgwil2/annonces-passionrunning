@@ -84,7 +84,7 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 
 		// Pagination
 		$scope.currentPage = 0; 
-		$scope.pageSize = 20;
+		$scope.pageSize = 1;
 
 		$scope.setCurrentPage = function(currentPage){
 			$scope.currentPage = currentPage;
@@ -109,7 +109,10 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 		}
 
 		$scope.getPagesInPagination = function(){
-			if($scope.currentPage < 2 || $scope.currentPage == $scope.getNumberOfPages() - 1)){
+			if($scope.getNumberOfPages() < 4){
+				return $scope.getNumberOfPages();
+			}
+			else if($scope.currentPage < 2 || $scope.currentPage == $scope.getNumberOfPages() - 1){
 				return 3;
 			}
 			else{
