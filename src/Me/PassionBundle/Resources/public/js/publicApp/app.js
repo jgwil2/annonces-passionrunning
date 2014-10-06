@@ -6,7 +6,8 @@ var annoncesApp = angular.module('annoncesApp', [
 	'Data',
 	'angularFileUpload',
 	'Flash',
-	'CustomCache'
+	'CustomCache',
+	'annoncesFilters'
 ]);
 
 var DIR = '../bundles/mepassion/partials';

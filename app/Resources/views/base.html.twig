@@ -27,14 +27,16 @@
             <script src="{{asset('bundles/mepassion/js/secureApp/controllers.js')}}"></script>
             <script src="{{asset('bundles/mepassion/js/secureApp/services.js')}}"></script>
             <script src="{{asset('bundles/mepassion/js/secureApp/directives.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/publicApp/filters.js')}}"></script>
         {% else %}
             <script src="{{asset('bundles/mepassion/js/publicApp/app.js')}}"></script>
             <script src="{{asset('bundles/mepassion/js/publicApp/controllers.js')}}"></script>
             <script src="{{asset('bundles/mepassion/js/publicApp/services.js')}}"></script>
             <script src="{{asset('bundles/mepassion/js/publicApp/directives.js')}}"></script>
+            <script src="{{asset('bundles/mepassion/js/publicApp/filters.js')}}"></script>
         {% endif %}
 
-        <base href="http://mouvementetik.local/annonces-app/web/app_dev.php/">
+        <base href="http://workspace/annonces-passionrunning/web/app_dev.php/">
 
     </head>
     {% if app.user %}

@@ -3,7 +3,7 @@
 	<div id="gauche">
 		<h1>Les dernières annonces</h1>
 		<!--début blocannonce-->
-		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in annonces | filter:category | filter:search.query | filter:{region:search.region} | filter:matchPrix">
+		<a href="annonce/{{annonce.id}}" ng-repeat="annonce in displayedAnnonces = (annonces | filter:category | filter:search.query | filter:{region:search.region} | filter:matchPrix) | startFrom:(currentPage * pageSize || 0) | limitTo:pageSize">
 		<div class="blocannonce">
 			<!-- début date -->
 			<div class="dateannonce">
@@ -12,7 +12,10 @@
 			</div>
 			<!-- // date -->
 			<!-- début photo -->
-			<div class="photoannonce">
+			<div class="photoannonce" ng-show="annonce.photoPath == 'initial'">
+				<img ng-src="../../web/bundles/mepassion/images/nophoto.jpg" alt="{{annonce.titre}}" class="imgliste" />
+			</div>
+			<div class="photoannonce" ng-hide="annonce.photoPath == 'initial'">
 				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgliste" />
 			</div>
 			<!-- // photo -->
@@ -29,6 +32,25 @@
 			</div>
 		</a>
 		<!--// blocannonce-->
+		<div class="pagination" ng-hide="displayedAnnonces.length < pageSize">
+			<ul>
+				<li ng-class="{disabled: currentPage == 0}">
+					<a href ng-click="prevPage()">« Prev</a>
+				</li>
+				<li ng-repeat="i in getNumberAsArray(getPagesInPagination()) track by $index" ng-click="setCurrentPage($index)" ng-class="{active: $index == currentPage}">
+					<a href >{{$index + 1}}</a>
+				</li>
+				<li class="disabled" ng-hide="currentPage == getNumberOfPages() - 3 || currentPage == getNumberOfPages() - 2">
+					<a href>...</a>
+				</li>
+				<li ng-class="{active: currentPage == getNumberOfPages() - 1}">
+					<a href ng-click="setCurrentPage(getNumberOfPages() - 1)" ng-hide="currentPage == getNumberOfPages() - 2">{{getNumberOfPages()}}</a>
+				</li>
+				<li ng-class="{disabled: currentPage == getNumberOfPages() - 1}">
+					<a href ng-click="nextPage()">Next »</a>
+				</li>
+			</ul>
+		</div>
 	</div><!--//gauche-->
 
 	<!--droite-->

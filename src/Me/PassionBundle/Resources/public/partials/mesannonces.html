@@ -12,7 +12,10 @@
 			</div>
 			<!-- // date -->
 			<!-- début photo -->
-			<div class="photoannonce">
+			<div class="photoannonce" ng-show="annonce.photoPath == 'initial'">
+				<img ng-src="../../web/bundles/mepassion/images/nophoto.jpg" alt="{{annonce.titre}}" class="imgliste" />
+			</div>
+			<div class="photoannonce" ng-hide="annonce.photoPath == 'initial'">
 				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgliste" />
 			</div>
 			<!-- // photo -->

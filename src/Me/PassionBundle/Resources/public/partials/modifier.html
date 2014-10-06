@@ -5,7 +5,7 @@
 		<div class="detailannonce">
 			<span class="detailtitreannonce">{{annonce.titre}}</span>
 			<!-- début photo -->
-			<div class="detailphotoannonce">
+			<div class="detailphotoannonce" ng-hide="annonce.photoPath == 'initial'">
 				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgbig" />
 			</div>
 			<!-- // photo -->
@@ -107,7 +107,7 @@
 		<div class="detailannonce">
 			<span class="detailtitreannonce">{{annonce.titre}}</span>
 			<!-- début photo -->
-			<div class="detailphotoannonce">
+			<div class="detailphotoannonce" ng-hide="annonce.photoPath == 'initial'">
 				<img ng-src="../../web/uploads/{{annonce.photoPath}}" alt="{{annonce.titre}}" class="imgbig" />
 			</div>
 			<!-- // photo -->

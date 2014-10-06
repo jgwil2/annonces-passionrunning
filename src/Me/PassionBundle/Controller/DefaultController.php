@@ -30,7 +30,8 @@ class DefaultController extends Controller
     		INNER JOIN User
     		ON Annonce.user_id = User.id
     		AND Annonce.valid = 1
-            AND Annonce.active = 1');
+            AND Annonce.active = 1
+            ORDER BY Annonce.`dateCreated` DESC');
 
         // serialize and send to client
     	$serializedEntity = $this->container->get('serializer')->serialize($entity, 'json');

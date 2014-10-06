@@ -50,6 +50,7 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
+
 		// Set category for filtering
 		if($routeParams.category){
 			$scope.category = $routeParams.category;
@@ -80,6 +81,55 @@ annoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParams',
 				return true;
 			}
 		}
+
+		// Pagination
+		$scope.currentPage = 0; 
+		$scope.pageSize = 20;
+
+		$scope.setCurrentPage = function(currentPage){
+			$scope.currentPage = currentPage;
+			window.scrollTo(0,0);
+			console.log('current page:' + $scope.currentPage)
+		}
+
+		$scope.getNumberAsArray = function(num){
+			return new Array(num)
+		}
+
+		$scope.getNumberOfPages = function(){
+			if($scope.displayedAnnonces){
+				if($scope.displayedAnnonces.length == 0){
+					$scope.noArticles = true;
+				}
+		 		else{
+					$scope.noArticles = false;
+				}
+				return Math.ceil($scope.displayedAnnonces.length/$scope.pageSize)
+			}
+		}
+
+		$scope.getPagesInPagination = function(){
+			if($scope.currentPage < 2 || $scope.currentPage == $scope.getNumberOfPages() - 1)){
+				return 3;
+			}
+			else{
+				return $scope.currentPage + 2;
+			}
+		}
+
+		$scope.prevPage = function(){
+			if($scope.currentPage > 0){
+				$scope.currentPage--;
+				window.scrollTo(0,0);
+			}
+		}
+
+		$scope.nextPage = function(){
+			if($scope.currentPage < $scope.getNumberOfPages() - 1){
+				$scope.currentPage++;
+				window.scrollTo(0,0);
+			}
+		}
 	}
 ]);
 
@@ -99,12 +149,16 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash
 
 		$scope.onFileSelect = function($files){
 			$scope.file = $files;
-			$scope.fileError = true;
 		}
 
 		$scope.formError = false;
+		$scope.fileError = false;
+		$scope.loading = false;
 
 		$scope.processForm = function(){
+			if($scope.loading){
+				return;
+			}
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
 			}
@@ -112,6 +166,7 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash
 				$scope.fileError = true;
 			}
 			else{
+				$scope.loading = true;
 				$scope.formError = false;
 				$scope.upload = $upload.upload({
 					url: 'deposer-data',
@@ -119,9 +174,12 @@ annoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash
 					data: {form: $scope.form},
 					file: $scope.file
 				})
-				.then(function(response){
-					Flash.showMessage(response.data.message)
-				});
+				.then(
+					function(response){
+						$scope.loading = false;
+						Flash.showMessage(response.data.message)
+					}
+				);
 			}
 		}
 	}
@@ -196,7 +254,14 @@ annoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams'
 			$scope.modify = $scope.modify ? false : true;
 		}
 
+		$scope.formError = false;
+		$scope.fileError = false;
+		$scope.loading = false;
+
 		$scope.processForm = function(){
+			if($scope.loading){
+				return;
+			}
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
 			}
@@ -204,27 +269,35 @@ annoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams'
 				$scope.fileError = true;
 			}
 			else if($scope.file){
+				$scope.loading = true;
 				$scope.upload = $upload.upload({
 					url: 'modifier-data',
 					method: 'POST',
 					data: {form: $scope.form},
 					file: $scope.file
 				})
-				.then(function(response){
-					CustomCache.removeAll();
-					Flash.showMessage(response.data.message)
-				});
+				.then(
+					function(response){
+						$scope.loading = false;
+						CustomCache.removeAll();
+						Flash.showMessage(response.data.message)
+					}
+				);
 			}
 			else{
+				$scope.loading = true;
 				$scope.upload = $upload.upload({
 					url: 'modifier-data',
 					method: 'POST',
 					data: {form: $scope.form},
 				})
-				.then(function(response){
-					CustomCache.removeAll();
-					Flash.showMessage(response.data.message)
-				});
+				.then(
+					function(response){
+						$scope.loading = false;
+						CustomCache.removeAll();
+						Flash.showMessage(response.data.message)
+					}
+				);
 			}
 		}
 
