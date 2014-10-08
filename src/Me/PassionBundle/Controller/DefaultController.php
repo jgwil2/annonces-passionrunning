@@ -327,6 +327,10 @@ class DefaultController extends Controller
                 if($this->get("request")->files->get('file')){
                     $annonce->setPhoto($this->get("request")->files->get('file'));
                 }
+                else{
+                    $annonce->removeUpload();
+                    $annonce->setPhotoPath('initial');
+                }
 
                 $em->flush();
 

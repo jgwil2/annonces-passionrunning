@@ -89,7 +89,6 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 		$scope.setCurrentPage = function(currentPage){
 			$scope.currentPage = currentPage;
 			window.scrollTo(0,0);
-			console.log('current page:' + $scope.currentPage)
 		}
 
 		$scope.getNumberAsArray = function(num){
@@ -133,11 +132,12 @@ secureAnnoncesControllers.controller('ListCtrl', ['$scope', 'Data', '$routeParam
 				window.scrollTo(0,0);
 			}
 		}
+	}
 ]);
 
 // Submit an item (depot.html)
-secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 'Flash',
-	function($scope, Data, $upload, Flash){
+secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', '$location',
+	function($scope, Data, $upload, $location){
 		$scope.fileReaderSupported = window.FileReader != null && (window.FileAPI == null || FileAPI.html5 != false);
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
@@ -155,8 +155,11 @@ secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 
 		}
 
 		$scope.formError = false;
-		$scope.fileError = false;
+		$scope.filesizeError = false;
+		$scope.fileTypeError = false;
 		$scope.loading = false;
+
+		$scope.allowedFileTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png']
 
 		$scope.processForm = function(){
 			if($scope.loading){
@@ -166,11 +169,16 @@ secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 
 				$scope.formError = true;
 			}
 			else if($scope.file && $scope.file[0].size > 500000){
-				$scope.fileError = true;
+				$scope.fileSizeError = true;
+			}
+			else if($scope.file && $scope.allowedFileTypes.indexOf($scope.file[0].type) < 0){
+				$scope.fileTypeError = true;
 			}
 			else{
 				$scope.loading = true;
 				$scope.formError = false;
+				$scope.filesizeError = false;
+				$scope.fileTypeError = false;
 				$scope.upload = $upload.upload({
 					url: 'deposer-data',
 					method: 'POST',
@@ -180,7 +188,7 @@ secureAnnoncesControllers.controller('DepotCtrl', ['$scope', 'Data', '$upload', 
 				.then(
 					function(response){
 						$scope.loading = false;
-						Flash.showMessage(response.data.message)
+						$location.path('depot-succes');
 					}
 				);
 			}
@@ -209,8 +217,8 @@ secureAnnoncesControllers.controller('MesAnnoncesCtrl', ['$scope', '$window', 'D
 ]);
 
 // Single annonce (respond or modify depending on ownership)
-secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams', '$upload', '$window', 'Flash', 'CustomCache',
-	function($scope, Data, $routeParams, $upload, $window, Flash, CustomCache){
+secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeParams', '$upload', '$window', 'Flash', 'CustomCache', '$location',
+	function($scope, Data, $routeParams, $upload, $window, Flash, CustomCache, $location){
 		Data.retrieveAsync('categories-data').then(function(categories){
 			$scope.categories = categories;
 		});
@@ -242,16 +250,16 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 							"tel": annonces[i].tel
 						};
 
+					// Set ID of annonce to be sent with message
+					$scope.response = {
+						"annonceId": $scope.annonce.id
+					};
+
 					$scope.form.id = annonces[i].id;
 					$scope.form.category = annonces[i].category_id
 					break;
 				}
 			}
-
-			// Set ID of annonce to be sent with message
-			$scope.response = {
-				"annonceId": $scope.annonce.id
-			};
 
 			// Send response message
 			$scope.sendResponse = function(){
@@ -260,9 +268,12 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 				}
 				else{
 					// If no errors, redirect and close colorbox
-					Data.submitAsync('reponse-data', $scope.response).then(function(data){
-						$.colorbox.close();
-					});
+					Data.submitAsync('reponse-data', $scope.response).then(
+						function(data){
+							$.colorbox.close();
+							Flash.showMessage(response.data.message);
+						}
+					);
 				}
 			}
 		});
@@ -278,8 +289,11 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 		}
 
 		$scope.formError = false;
-		$scope.fileError = false;
+		$scope.filesizeError = false;
+		$scope.fileTypeError = false;
 		$scope.loading = false;
+
+		$scope.allowedFileTypes = ['image/gif', 'image/jpeg', 'image/pjpeg', 'image/png']
 
 		$scope.processForm = function(){
 			if($scope.loading){
@@ -288,11 +302,17 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 			if($scope.submitForm.$invalid){
 				$scope.formError = true;
 			}
-			else if($scope.file[0].size > 500000){
+			else if($scope.file && $scope.file[0].size > 500000){
 				$scope.fileError = true;
+			}
+			else if($scope.file && $scope.allowedFileTypes.indexOf($scope.file[0].type) < 0){
+				$scope.fileTypeError = true;
 			}
 			else if($scope.file){
 				$scope.loading = true;
+				$scope.formError = false;
+				$scope.filesizeError = false;
+				$scope.fileTypeError = false;
 				$scope.upload = $upload.upload({
 					url: 'modifier-data',
 					method: 'POST',
@@ -303,12 +323,15 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 					function(response){
 						$scope.loading = false;
 						CustomCache.removeAll();
-						Flash.showMessage(response.data.message)
+						$location.path('modification-succes');
 					}
 				);
 			}
 			else{
 				$scope.loading = true;
+				$scope.formError = false;
+				$scope.filesizeError = false;
+				$scope.fileTypeError = false;
 				$scope.upload = $upload.upload({
 					url: 'modifier-data',
 					method: 'POST',
@@ -318,17 +341,20 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 					function(response){
 						$scope.loading = false;
 						CustomCache.removeAll();
-						Flash.showMessage(response.data.message)
+						$location.path('modification-succes');
 					}
 				);
 			}
 		}
 
 		$scope.confirmDelete = function(){
-			Data.deleteAsync('supprimer-data/' + $scope.form.id).then(function(response){
-				CustomCache.removeAll();
-				$.colorbox.close();
-			})
+			Data.deleteAsync('supprimer-data/' + $scope.form.id).then(
+				function(response){
+					CustomCache.removeAll();
+					$.colorbox.close();
+					$location.path('suppression-succes');
+				}
+			);
 		}
 	}
 ]);

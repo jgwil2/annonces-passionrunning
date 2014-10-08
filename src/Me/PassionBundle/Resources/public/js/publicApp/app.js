@@ -28,6 +28,9 @@ annoncesApp.config(['$routeProvider', '$locationProvider',
 			when('/confirmation',{
 				templateUrl: DIR + '/confirmer.html'
 			}).
+			when('/depot-succes', {
+				templateUrl: DIR + '/merci_depot.html'
+			}).
 			when('/:category', {
 				templateUrl: DIR + '/list.html',
 				controller: 'ListCtrl'

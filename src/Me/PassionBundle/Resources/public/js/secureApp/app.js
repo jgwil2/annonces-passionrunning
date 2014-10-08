@@ -27,6 +27,15 @@ secureAnnoncesApp.config(['$routeProvider', '$locationProvider',
 			when('/confirmation',{
 				templateUrl: DIR + '/confirmer.html'
 			}).
+			when('/depot-succes', {
+				templateUrl: DIR + '/merci_depot.html'
+			}).
+			when('/modification-succes', {
+				templateUrl: DIR + '/merci_modification.html'
+			}).
+			when('/suppression-succes', {
+				templateUrl: DIR + '/merci_suppression.html'
+			}).
 			when('/mesannonces', {
 				templateUrl: DIR + '/mesannonces.html',
 				controller: 'MesAnnoncesCtrl'

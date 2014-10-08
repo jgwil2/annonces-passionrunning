@@ -171,7 +171,7 @@ class Annonce
 
         $this->getPhoto()->move($this->getUploadRootDir(), $this->photoPath);
 
-        if(isset($this->temp)){
+        if(isset($this->temp) && $this->temp != 'initial'){
             unlink($this->getUploadRootDir().'/'.$this->temp);
             $this->temp = null;
         }
