@@ -78,6 +78,10 @@
 				<small>taille maximum : 500Ko</small>
 			</div>
 
+			<div class="ligne" ng-if="annonce.photoPath != 'initial'">
+				<input type="checkbox" ng-model="form.deletePhoto" ng-true-value="1" ng-false-value="0" ng-checked="false" />Supprimer la photo actuelle
+			</div>
+
 			<div class="error" ng-show="formError" >Veuillez remplir le formulaire avant de l'envoyer</div>
 			<div class="error" ng-show="fileSizeError" >La photo que vous avez choisie est trop lourde. Veuillez choisir une photo qui fait moins de 500ko.</div>
 			<div class="error" ng-show="fileTypeError" >Le fichier que vous avez choisi n'est pas d'un type accepté. Veuillez choisir un fichier de type "jpeg", "png" ou "gif".</div>

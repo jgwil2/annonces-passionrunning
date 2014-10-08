@@ -239,6 +239,7 @@ secureAnnoncesControllers.controller('ModifierCtrl', ['$scope', 'Data', '$routeP
 
 					$scope.form = {
 							"acceptConditions": "1",
+							"deletePhoto": "0",
 							"code": annonces[i].code_postal,
 							"ville": annonces[i].ville,
 							"category": {
