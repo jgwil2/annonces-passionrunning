@@ -32,7 +32,7 @@
 			</div>
 		</a>
 		<!--// blocannonce-->
-		<div class="pagination" ng-hide="displayedAnnonces.length < pageSize">
+		<div class="pagination" ng-show="displayedAnnonces.length > pageSize">
 			<ul>
 				<li ng-class="{disabled: currentPage == 0}">
 					<a href ng-click="prevPage()">« Prev</a>
